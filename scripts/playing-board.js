@@ -1,3 +1,13 @@
+var horizontalTiles = 10,
+    verticalTiles = 10,
+    numberOfTiles = horizontalTiles * verticalTiles,
+    tileSize = 40,
+    tileStartPositionX = 5,
+    tileStartPositionY = 5,
+    tileStep = tileSize + tileStartPositionX,
+    tiles = [],
+    mines = [];
+
 function createMine(row, col) {
     return {
         row: row,
@@ -12,8 +22,7 @@ function getRandomInt(min, max) {
 }
 
 function generateRandomlyPositionedMines(numberOfMines, horizontalTiles, verticalTiles) {
-    var mines = [],
-        randomRowPosition,
+    var randomRowPosition,
         randomColPosition,
         currentMine;
 
@@ -23,9 +32,35 @@ function generateRandomlyPositionedMines(numberOfMines, horizontalTiles, vertica
         currentMine = createMine(randomRowPosition, randomColPosition);
         mines.push(currentMine);
     }
-
-    console.log(mines);
-
 }
 
 // TODO: create a function to check if two mines appear on the same place and fix it
+
+function createTile(startX, startY, row, col, hasMine) {
+    return {
+        startX: startX,
+        startY: startY,
+        row: row,
+        col: col,
+        hasMine: hasMine
+    }
+}
+
+function generateTiles() {
+    var currentTile,
+        hasMine = false;
+    for (var row = 0; row < verticalTiles; row += 1) {
+        for (var col = 0; col < horizontalTiles; col += 1) {
+            currentTile = createTile(tileStartPositionX, tileStartPositionY, row, col, hasMine);
+            tiles.push(currentTile);
+            tileStartPositionX += tileStep;
+        }
+
+        tileStartPositionX = 5;
+        tileStartPositionY += tileStep;
+    }
+}
+
+function preparePlayingBoard() {
+
+}
