@@ -17,8 +17,8 @@ function createEmptyBoardMatrix() {
         board[i] = new Array(horizontalTiles);
     }
 
-    for (var row = 0; row < verticalTiles; row += 1){
-        for (var col = 0; col < verticalTiles; col += 1){
+    for (var row = 0; row < verticalTiles; row += 1) {
+        for (var col = 0; col < verticalTiles; col += 1) {
             board[row][col] = 0;
         }
     }
@@ -49,10 +49,41 @@ function calculateValuesBehindTiles() {
     for (var row = 0; row < verticalTiles; row += 1) {
         for (var col = 0; col < horizontalTiles; col += 1) {
             if (board[row][col] === mineSymbol) {
-
+                if (row - 1 >= 0 && col - 1 >= 0 && isValidPosition(row - 1, col - 1)) {
+                    board[row - 1][col - 1] += 1;
+                }
+                if (row - 1 >= 0 && isValidPosition(row - 1, col)) {
+                    board[row - 1][col] += 1;
+                }
+                if (col - 1 >= 0 && isValidPosition(row, col - 1)) {
+                    board[row][col - 1] += 1;
+                }
+                if (row + 1 < verticalTiles && col + 1 < horizontalTiles && isValidPosition(row + 1, col + 1)) {
+                    board[row + 1][col + 1] += 1;
+                }
+                if (row + 1 < verticalTiles && isValidPosition(row + 1, col)) {
+                    board[row + 1][col] += 1;
+                }
+                if (col + 1 < horizontalTiles && isValidPosition(row, col + 1)) {
+                    board[row][col + 1] += 1;
+                }
+                if (row + 1 < verticalTiles && col - 1 >= 0 && isValidPosition(row + 1, col - 1)) {
+                    board[row + 1][col - 1] += 1;
+                }
+                if (row - 1 >= 0 && col + 1 < horizontalTiles && isValidPosition(row - 1, col + 1)) {
+                    board[row - 1][col + 1] += 1;
+                }
             }
         }
     }
+}
+
+function isValidPosition(row, col) {
+    if (board[row][col] !== mineSymbol) {
+        return true;
+    }
+
+    return false;
 }
 
 function createTile(startX, startY, row, col, hasMine) {
@@ -96,7 +127,14 @@ function drawTiles() {
 function preparePlayingBoard() {
     createEmptyBoardMatrix();
     generateRandomlyPositionedMines(10);
+    calculateValuesBehindTiles();
     generateTiles();
     drawTiles();
-    console.log(board);
+    printBoard();
+}
+
+function printBoard() {
+    for (var row = 0; row < verticalTiles; row += 1) {
+        console.log(board[row]);
+    }
 }
