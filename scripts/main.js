@@ -3,7 +3,6 @@ var bodyMarginInPx = 8;
 function main() {
     preparePlayingBoard();
     draw();
-    addListener();
 }
 
 
@@ -46,29 +45,5 @@ function main() {
 //    context.fillText('1', 20, 30);
 //}
 //
-
-function addListener (){
-    canvas.addEventListener('click', onCanvasClick, false);
-}
-
-function onCanvasClick(event) {
-    //console.log('x ' + event.clientX);
-    //console.log('y ' +event.clientY);
-    //console.log('type ' + event.type);
-    //console.log('button ' + event.button);
-    //console.log('target' + event.target);
-    var x = event.clientX,
-        y = event.clientY;
-
-    var tile = tiles.find(function(item){
-        return item.startX + bodyMarginInPx + tileSize > x &&
-            item.startY + bodyMarginInPx + tileSize > y ;
-    });
-
-    console.log(tile);
-
-    context.fillStyle = 'grey';
-    context.fillRect(tile.startX, tile.startY, tileSize, tileSize);
-}
 
 main();

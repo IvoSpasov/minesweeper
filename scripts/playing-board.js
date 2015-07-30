@@ -86,23 +86,23 @@ function isValidPosition(row, col) {
     return false;
 }
 
-function createTile(startX, startY, row, col, hasMine) {
+function createTile(startX, startY, row, col, value) {
     return {
         startX: startX,
         startY: startY,
         row: row,
         col: col,
-        hasMine: hasMine
+        value: value
     }
 }
 
 // TODO: add mines
 function generateTiles() {
-    var currentTile,
-        hasMine = false;
+    var currentTile;
+
     for (var row = 0; row < verticalTiles; row += 1) {
         for (var col = 0; col < horizontalTiles; col += 1) {
-            currentTile = createTile(tileStartPositionX, tileStartPositionY, row, col, hasMine);
+            currentTile = createTile(tileStartPositionX, tileStartPositionY, row, col, board[row][col]);
             tiles.push(currentTile);
             tileStartPositionX += tileStep;
         }
