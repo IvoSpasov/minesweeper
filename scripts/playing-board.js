@@ -5,15 +5,22 @@ var horizontalTiles = 10,
     tileStartPositionX = 5,
     tileStartPositionY = 5,
     tileStep = tileSize + tileStartPositionX,
-    mines,
+    board,
     tiles = [],
+    mineSymbol = '*',
     canvas = document.getElementById('mines-canvas'),
     context = canvas.getContext('2d');
 
-function createEmptyMinesMatrix() {
-    mines = new Array(verticalTiles);
+function createEmptyBoardMatrix() {
+    board = new Array(verticalTiles);
     for (var i = 0; i < verticalTiles; i += 1) {
-        mines[i] = new Array(horizontalTiles);
+        board[i] = new Array(horizontalTiles);
+    }
+
+    for (var row = 0; row < verticalTiles; row += 1){
+        for (var col = 0; col < verticalTiles; col += 1){
+            board[row][col] = 0;
+        }
     }
 }
 
@@ -26,15 +33,24 @@ function getRandomInt(min, max) {
 function generateRandomlyPositionedMines(numberOfMines) {
     var randomRowPosition,
         randomColPosition,
-        minesCounter = 0,
-        mineSymbol = '*';
+        minesCounter = 0;
 
     while (minesCounter < numberOfMines) {
         randomRowPosition = getRandomInt(0, verticalTiles);
         randomColPosition = getRandomInt(0, horizontalTiles);
-        if (!mines[randomRowPosition][randomColPosition]) {
-            mines[randomRowPosition][randomColPosition] = mineSymbol;
+        if (!board[randomRowPosition][randomColPosition]) {
+            board[randomRowPosition][randomColPosition] = mineSymbol;
             minesCounter += 1;
+        }
+    }
+}
+
+function calculateValuesBehindTiles() {
+    for (var row = 0; row < verticalTiles; row += 1) {
+        for (var col = 0; col < horizontalTiles; col += 1) {
+            if (board[row][col] === mineSymbol) {
+
+            }
         }
     }
 }
@@ -77,10 +93,10 @@ function drawTiles() {
     }
 }
 
-
 function preparePlayingBoard() {
-    createEmptyMinesMatrix();
+    createEmptyBoardMatrix();
     generateRandomlyPositionedMines(10);
     generateTiles();
     drawTiles();
+    console.log(board);
 }
