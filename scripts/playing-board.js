@@ -5,13 +5,15 @@ var horizontalTiles = 10,
     tileStartPositionX = 5,
     tileStartPositionY = 5,
     tileStep = tileSize + tileStartPositionX,
+    mines,
     tiles = [],
-    mines = [];
+    canvas = document.getElementById('mines-canvas'),
+    context = canvas.getContext('2d');
 
-function createMine(row, col) {
-    return {
-        row: row,
-        col: col
+function createEmptyMinesMatrix() {
+    mines = new Array(verticalTiles);
+    for (var i = 0; i < verticalTiles; i += 1) {
+        mines[i] = new Array(horizontalTiles);
     }
 }
 
@@ -21,20 +23,21 @@ function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
 }
 
-function generateRandomlyPositionedMines(numberOfMines, horizontalTiles, verticalTiles) {
+function generateRandomlyPositionedMines(numberOfMines) {
     var randomRowPosition,
         randomColPosition,
-        currentMine;
+        minesCounter = 0,
+        mineSymbol = '*';
 
-    for (var i = 0; i < numberOfMines; i += 1) {
+    while (minesCounter < numberOfMines) {
         randomRowPosition = getRandomInt(0, verticalTiles);
         randomColPosition = getRandomInt(0, horizontalTiles);
-        currentMine = createMine(randomRowPosition, randomColPosition);
-        mines.push(currentMine);
+        if (!mines[randomRowPosition][randomColPosition]) {
+            mines[randomRowPosition][randomColPosition] = mineSymbol;
+            minesCounter += 1;
+        }
     }
 }
-
-// TODO: create a function to check if two mines appear on the same place and fix it
 
 function createTile(startX, startY, row, col, hasMine) {
     return {
@@ -46,6 +49,7 @@ function createTile(startX, startY, row, col, hasMine) {
     }
 }
 
+// TODO: add mines
 function generateTiles() {
     var currentTile,
         hasMine = false;
@@ -61,6 +65,22 @@ function generateTiles() {
     }
 }
 
-function preparePlayingBoard() {
+function drawTiles() {
+    var x,
+        y;
 
+    context.fillStyle = 'rgb(107, 187, 201)';
+    for (var index in tiles) {
+        x = tiles[index].startX;
+        y = tiles[index].startY;
+        context.fillRect(x, y, tileSize, tileSize);
+    }
+}
+
+
+function preparePlayingBoard() {
+    createEmptyMinesMatrix();
+    generateRandomlyPositionedMines(10);
+    generateTiles();
+    drawTiles();
 }
