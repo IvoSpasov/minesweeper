@@ -117,7 +117,7 @@ function preparePlayingBoard() {
     generateRandomlyPositionedMines(10);
     calculateValuesBehindTiles();
     generateTiles();
-    //printBoard();
+    printBoard();
 }
 
 function printBoard() {
