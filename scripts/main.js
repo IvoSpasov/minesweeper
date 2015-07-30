@@ -1,5 +1,6 @@
 function main() {
     preparePlayingBoard();
+    draw();
 }
 
 
