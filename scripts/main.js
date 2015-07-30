@@ -37,13 +37,5 @@ function main() {
 //
 //    animate();
 //}
-//
-//
-//function displayNumberOfMines() {
-//    context.fillStyle = 'black';
-//    context.font = 'bold 28px Consolas';
-//    context.fillText('1', 20, 30);
-//}
-//
 
 main();

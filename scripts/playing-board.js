@@ -96,7 +96,6 @@ function createTile(startX, startY, row, col, value) {
     }
 }
 
-// TODO: add mines
 function generateTiles() {
     var currentTile;
 
