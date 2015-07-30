@@ -5,9 +5,12 @@ var context = canvas.getContext('2d');
 function main() {
     var horizontalTiles = 10,
         verticalTiles = 10;
-    drawTilesAnimated(horizontalTiles, verticalTiles);
+    drawTiles(horizontalTiles, verticalTiles);
 
     displayNumberOfMines();
+    addListener();
+    generateRandomlyPositionedMines(10, horizontalTiles, verticalTiles);
+
 }
 
 function drawTiles(horizontalTiles, verticalTiles) {
@@ -41,7 +44,7 @@ function drawTilesAnimated(horizontalTiles, verticalTiles) {
         tileStartPositionY = tileStartPositionX,
         tileStep = tileSize + tileStartPositionX,
         i = 1;
-    
+
     function animate() {
         context.fillStyle = 'rgb(107, 187, 201)';
         context.fillRect(tileStartPositionX, tileStartPositionY, tileSize, tileSize);
@@ -52,7 +55,8 @@ function drawTilesAnimated(horizontalTiles, verticalTiles) {
         }
 
         if (i < numberOfTiles) {
-            setTimeout(animate, 5);
+            //requestAnimationFrame(animate);
+            setTimeout(animate, 10);
         }
 
         i += 1;
@@ -64,8 +68,20 @@ function drawTilesAnimated(horizontalTiles, verticalTiles) {
 
 function displayNumberOfMines() {
     context.fillStyle = 'black';
-    context.font = '28px Arial';
+    context.font = 'bold 28px Consolas';
     context.fillText('1', 20, 30);
+}
+
+function addListener (){
+    canvas.addEventListener('click', onCanvasClick, false);
+}
+
+function onCanvasClick(event) {
+    console.log('x ' + event.clientX);
+    console.log('y ' +event.clientY);
+    console.log('type ' + event.type);
+    console.log('button ' + event.button);
+    console.log('target' + event.target);
 }
 
 main();
