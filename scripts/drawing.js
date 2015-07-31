@@ -18,6 +18,9 @@ function drawGrayTile(tile) {
 }
 
 function drawTileWithValue(tile) {
+    var valueXOffset = 13,
+        valueYOffset = 30;
+
     drawGrayTile(tile);
     switch (tile.value) {
         case mineSymbol:
@@ -35,11 +38,14 @@ function drawTileWithValue(tile) {
         case 4:
             context.fillStyle = 'purple';
             break;
+        case 5:
+            context.fillStyle = 'orange';
+            break;
         default :
             context.fillStyle = 'black';
             break;
     }
 
     context.font = 'bold 28px Consolas';
-    context.fillText(tile.value, tile.startX + 13, tile.startY + 30);
+    context.fillText(tile.value, tile.startX + valueXOffset, tile.startY + valueYOffset);
 }

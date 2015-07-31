@@ -1,19 +1,16 @@
-var tilesWithoutMines = (verticalTiles * horizontalTiles) - numberOfMines,
-    tilesWithoutMinesCounter = 0;
+var tilesWithoutMines,
+    tilesWithoutMinesCounter;
 
 function addEventListeners() {
     canvas.addEventListener('click', onTileClick, false);
-    document.getElementById('restart').addEventListener('click', restart, false);
+    document.getElementById('restart').addEventListener('click', startNewGame, false);
 }
 
-function removeEventListenerFromCanvas (){
+function removeEventListenerFromCanvas() {
     canvas.removeEventListener('click', onTileClick, false);
 }
 
 function onTileClick(event) {
-    //console.log('type ' + event.type);
-    //console.log('button ' + event.button);
-    //console.log('target' + event.target);
     var bodyMarginInPx = 8,
         x = event.clientX,
         y = event.clientY,
@@ -24,7 +21,7 @@ function onTileClick(event) {
             tile.startY + bodyMarginInPx + tileSize > y;
     });
 
-    if (tile) {
+    if (tile && !tile.isVisited) {
         showBehindTile(tile);
     }
 }
@@ -37,9 +34,9 @@ function showBehindTile(tile) {
         gameOver();
     }
     else {
-        checkIsGameWon(tile);
         tile.isVisited = true;
         drawTileWithValue(tile);
+        countAndCheckForWin();
     }
 }
 
@@ -65,8 +62,10 @@ function showAllTilesWithoutValue(row, col) {
         return;
     }
 
-    checkIsGameWon(currentTile);
     currentTile.isVisited = true;
+
+    // if we perform the check here we count all tiles
+    countAndCheckForWin();
 
     // when we reach tile indicating the number of mines then draw it and stop
     if (currentTile.value !== 0) {
@@ -90,6 +89,20 @@ function showAllTilesWithoutValue(row, col) {
     showAllTilesWithoutValue(row + 1, col - 1); // 8 o'clock
 }
 
+function countAndCheckForWin() {
+    tilesWithoutMinesCounter += 1;
+
+    if (tilesWithoutMinesCounter === tilesWithoutMines) {
+        gameWon();
+    }
+}
+
+function gameWon() {
+    var gameWonText = 'Congratulations. You win.';
+    addTextInStatusField(gameWonText);
+    removeEventListenerFromCanvas();
+}
+
 function gameOver() {
     var currentTile,
         gameOverText = 'You hit a mine. Game Over.';
@@ -105,39 +118,23 @@ function gameOver() {
     }
 }
 
-function addTextInStatusField(text){
+function addTextInStatusField(text) {
     var statusField = document.getElementById('game-status');
     statusField.innerHTML = '<div>' + text + '</div>';
 }
 
-function clearStatusField(){
+function clearStatusField() {
     addTextInStatusField('');
 }
 
-function gameWon() {
-    var gameWonText = 'Congratulations. You win.';
-    addTextInStatusField(gameWonText);
-    removeEventListenerFromCanvas();
-}
-
-function checkIsGameWon(tile) {
-    if (!tile.isVisited) {
-        tilesWithoutMinesCounter += 1;
-    }
-
-    console.log('counter: ' + tilesWithoutMinesCounter + ' out of ' + tilesWithoutMines);
-
-    if (tilesWithoutMinesCounter === tilesWithoutMines) {
-        gameWon();
-    }
+function setTilesCounters() {
+    tilesWithoutMines = (verticalTiles * horizontalTiles) - numberOfMines;
+    tilesWithoutMinesCounter = 0;
 }
 
 function initializeGame() {
+    setTilesCounters();
     addEventListeners();
     clearStatusField();
 }
 
-function resetTilesCounter (){
-    tilesWithoutMines = (verticalTiles * horizontalTiles) - numberOfMines;
-        tilesWithoutMinesCounter = 0;
-}

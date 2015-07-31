@@ -1,9 +1,9 @@
-var horizontalTiles = 10,
-    verticalTiles = 10,
+var horizontalTiles = 9,
+    verticalTiles = 9,
     tileSize = 40,
-    tileStartPositionX = 5,
-    tileStartPositionY = 5,
-    tileStep = tileSize + tileStartPositionX,
+    tileStartPositionX,
+    tileStartPositionY,
+    tileStep,
     numberOfMines = 10,
     board,
     tiles = [],
@@ -79,11 +79,7 @@ function calculateValuesBehindTiles() {
 }
 
 function isValidPosition(row, col) {
-    if (board[row][col] !== mineSymbol) {
-        return true;
-    }
-
-    return false;
+    return board[row][col] !== mineSymbol;
 }
 
 function createTile(startX, startY, row, col, value, isVisited) {
@@ -98,12 +94,12 @@ function createTile(startX, startY, row, col, value, isVisited) {
 }
 
 function generateTiles() {
-    var currentTile;
+    var newTile;
 
     for (var row = 0; row < verticalTiles; row += 1) {
         for (var col = 0; col < horizontalTiles; col += 1) {
-            currentTile = createTile(tileStartPositionX, tileStartPositionY, row, col, board[row][col], false);
-            tiles.push(currentTile);
+            newTile = createTile(tileStartPositionX, tileStartPositionY, row, col, board[row][col], false);
+            tiles.push(newTile);
             tileStartPositionX += tileStep;
         }
 
@@ -113,22 +109,20 @@ function generateTiles() {
 }
 
 function preparePlayingBoard() {
+    tileStartPositionX = 5;
+    tileStartPositionY = 5;
+    tileStep = tileSize + tileStartPositionX;
+    board = undefined;
+    tiles = [];
     createEmptyBoardMatrix();
     generateRandomlyPositionedMines(numberOfMines);
     calculateValuesBehindTiles();
     generateTiles();
-    printBoard();
+    printBoardOnConsole();
 }
 
-function printBoard() {
+function printBoardOnConsole() {
     for (var row = 0; row < verticalTiles; row += 1) {
         console.log(board[row]);
     }
-}
-
-function resetBoard() {
-    tileStartPositionX = 5;
-    tileStartPositionY = 5;
-    board = undefined;
-    tiles = [];
 }
