@@ -68,7 +68,4 @@ function showAllTilesWithoutValue(row, col) {
     showAllTilesWithoutValue(row - 1, col); // up
     showAllTilesWithoutValue(row, col + 1); // right
     showAllTilesWithoutValue(row + 1, col); // down
-
-    // return cell state back to original
-    board[row][col] = 0;
 }
