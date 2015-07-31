@@ -22,47 +22,53 @@ function onTileClick(event) {
 }
 
 function showBehindTile(tile) {
-    drawGrayTile(tile);
+
 
     if (tile.value === 0) {
-        //drawGrayTile(tile);
+        showAllTilesWithoutValue(tile.row, tile.col);
     }
     else {
-        fillTileWithValue(tile);
+        drawTileWithValue(tile);
     }
 }
 
-//function showAllTilesWithoutValue(tileWithoutValue) {
-//    var row = tileWithoutValue.row,
-//        col = tileWithoutValue.col,
-//        currentRow = row,
-//        currentCol = col,
-//        currentTile,
-//        isInBoard;
-//
-//    while (true) {
-//        currentRow -= 1;
-//        currentCol -= 1;
-//        isInBoard = 0 <= currentRow && currentRow < verticalTiles &&
-//            0 <= currentCol && currentCol < horizontalTiles;
-//
-//        if (!isInBoard) {
-//            break;
-//        }
-//
-//        currentTile = tiles.find(function (tile) {
-//            return tile.row === currentRow && tile.col === currentCol;
-//        });
-//
-//        drawGrayTile(currentTile);
-//
-//        if (board[currentRow][currentCol] !== 0) {
-//            fillTileWithValue(currentTile);
-//            break;
-//        }
-//    }
-//}
+function isInBoard(row, col) {
+    var rowInRange = 0 <= row && row < verticalTiles,
+        colInRange = 0 <= col && col < horizontalTiles;
+    return rowInRange && colInRange;
+}
 
-function showAllTilesWithoutValue(row, col){
+function showAllTilesWithoutValue(row, col) {
+    if (!isInBoard(row, col)) {
+        return;
+    }
 
+    var currentTile = tiles.find(function (tile) {
+        return tile.row === row && tile.col === col;
+    });
+
+    // if the cell has a number indicating one or more mines
+    // draw the tile with the value of mines which was reached
+    // and return to find other empty cells
+    if (board[row][col] !== 0) {
+        if (board[row][col] !== 'v'){
+            drawTileWithValue(currentTile);
+        }
+
+        return;
+    }
+
+    drawGrayTile(currentTile);
+
+    // temporary mark cell as visited
+    board[row][col] = 'v';
+
+    // Invoke recursion the explore all possible directions
+    showAllTilesWithoutValue(row, col - 1); // left
+    showAllTilesWithoutValue(row - 1, col); // up
+    showAllTilesWithoutValue(row, col + 1); // right
+    showAllTilesWithoutValue(row + 1, col); // down
+
+    // return cell state back to original
+    board[row][col] = 0;
 }
