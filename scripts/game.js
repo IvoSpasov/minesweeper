@@ -68,4 +68,10 @@ function showAllTilesWithoutValue(row, col) {
     showAllTilesWithoutValue(row - 1, col); // up
     showAllTilesWithoutValue(row, col + 1); // right
     showAllTilesWithoutValue(row + 1, col); // down
+
+    // diagonally as well to open tiles with values in corners
+    showAllTilesWithoutValue(row - 1, col - 1); // 10 o'clock
+    showAllTilesWithoutValue(row - 1, col + 1); // 2 o'clock
+    showAllTilesWithoutValue(row + 1, col + 1); // 4 o'clock
+    showAllTilesWithoutValue(row + 1, col - 1); // 8 o'clock
 }

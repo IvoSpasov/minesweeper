@@ -18,6 +18,9 @@ function drawGrayTile(tile) {
 function drawTileWithValue(tile) {
     drawGrayTile(tile);
     switch (tile.value) {
+        case '*':
+            context.fillStyle = 'red';
+            break;
         case 1:
             context.fillStyle = 'blue';
             break;
@@ -25,7 +28,7 @@ function drawTileWithValue(tile) {
             context.fillStyle = 'green';
             break;
         case 3:
-            context.fillStyle = 'red';
+            context.fillStyle = 'yellow';
             break;
         case 4:
             context.fillStyle = 'purple';
