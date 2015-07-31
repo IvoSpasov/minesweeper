@@ -1,11 +1,10 @@
-var bodyMarginInPx = 8;
-
 function main() {
     preparePlayingBoard();
     draw();
+    startGame();
 }
 
-
+main();
 
 //function drawTilesAnimated(horizontalTiles, verticalTiles) {
 //    horizontalTiles = horizontalTiles || 10;
@@ -37,5 +36,3 @@ function main() {
 //
 //    animate();
 //}
-
-main();

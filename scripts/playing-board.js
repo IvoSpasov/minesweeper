@@ -1,6 +1,5 @@
 var horizontalTiles = 10,
     verticalTiles = 10,
-    numberOfTiles = horizontalTiles * verticalTiles,
     tileSize = 40,
     tileStartPositionX = 5,
     tileStartPositionY = 5,
