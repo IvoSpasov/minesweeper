@@ -22,8 +22,6 @@ function onTileClick(event) {
 }
 
 function showBehindTile(tile) {
-
-
     if (tile.value === 0) {
         showAllTilesWithoutValue(tile.row, tile.col);
     }
@@ -39,31 +37,33 @@ function isInBoard(row, col) {
 }
 
 function showAllTilesWithoutValue(row, col) {
+    var currentTile;
+
+    // if we are outside the board then stop
     if (!isInBoard(row, col)) {
         return;
     }
 
-    var currentTile = tiles.find(function (tile) {
+    currentTile = tiles.find(function (tile) {
         return tile.row === row && tile.col === col;
     });
 
-    // if the cell has a number indicating one or more mines
-    // draw the tile with the value of mines which was reached
-    // and return to find other empty cells
-    if (board[row][col] !== 0) {
-        if (board[row][col] !== 'v'){
-            drawTileWithValue(currentTile);
-        }
-
+    if (currentTile.isVisited) {
         return;
     }
 
+    currentTile.isVisited = true;
+
+    // when we reach tile indicating the number of mines then draw it and stop
+    if (currentTile.value !== 0) {
+        drawTileWithValue(currentTile);
+        return;
+    }
+
+    // if everything is ok then draw the grey tile that was reached
     drawGrayTile(currentTile);
 
-    // temporary mark cell as visited
-    board[row][col] = 'v';
-
-    // Invoke recursion the explore all possible directions
+    // Invoke recursion to explore all possible directions
     showAllTilesWithoutValue(row, col - 1); // left
     showAllTilesWithoutValue(row - 1, col); // up
     showAllTilesWithoutValue(row, col + 1); // right

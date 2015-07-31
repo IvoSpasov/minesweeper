@@ -1,6 +1,6 @@
 function main() {
     preparePlayingBoard();
-    draw();
+    drawInitialTiles();
     startGame();
 }
 

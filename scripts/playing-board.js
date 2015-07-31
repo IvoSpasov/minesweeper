@@ -85,13 +85,14 @@ function isValidPosition(row, col) {
     return false;
 }
 
-function createTile(startX, startY, row, col, value) {
+function createTile(startX, startY, row, col, value, isVisited) {
     return {
         startX: startX,
         startY: startY,
         row: row,
         col: col,
-        value: value
+        value: value,
+        isVisited: isVisited
     }
 }
 
@@ -100,7 +101,7 @@ function generateTiles() {
 
     for (var row = 0; row < verticalTiles; row += 1) {
         for (var col = 0; col < horizontalTiles; col += 1) {
-            currentTile = createTile(tileStartPositionX, tileStartPositionY, row, col, board[row][col]);
+            currentTile = createTile(tileStartPositionX, tileStartPositionY, row, col, board[row][col], false);
             tiles.push(currentTile);
             tileStartPositionX += tileStep;
         }

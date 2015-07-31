@@ -1,4 +1,4 @@
-function drawTiles() {
+function drawInitialTiles() {
     var x,
         y;
 
@@ -17,11 +17,24 @@ function drawGrayTile(tile) {
 
 function drawTileWithValue(tile) {
     drawGrayTile(tile);
-    context.fillStyle = 'blue';
+    switch (tile.value) {
+        case 1:
+            context.fillStyle = 'blue';
+            break;
+        case 2:
+            context.fillStyle = 'green';
+            break;
+        case 3:
+            context.fillStyle = 'red';
+            break;
+        case 4:
+            context.fillStyle = 'purple';
+            break;
+        default :
+            context.fillStyle = 'black';
+            break;
+    }
+
     context.font = 'bold 28px Consolas';
     context.fillText(tile.value, tile.startX + 13, tile.startY + 30);
-}
-
-function draw() {
-    drawTiles();
 }
