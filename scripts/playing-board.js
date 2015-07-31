@@ -4,6 +4,7 @@ var horizontalTiles = 10,
     tileStartPositionX = 5,
     tileStartPositionY = 5,
     tileStep = tileSize + tileStartPositionX,
+    numberOfMines = 10,
     board,
     tiles = [],
     mineSymbol = '*',
@@ -113,7 +114,7 @@ function generateTiles() {
 
 function preparePlayingBoard() {
     createEmptyBoardMatrix();
-    generateRandomlyPositionedMines(10);
+    generateRandomlyPositionedMines(numberOfMines);
     calculateValuesBehindTiles();
     generateTiles();
     printBoard();
@@ -123,4 +124,11 @@ function printBoard() {
     for (var row = 0; row < verticalTiles; row += 1) {
         console.log(board[row]);
     }
+}
+
+function resetBoard() {
+    tileStartPositionX = 5;
+    tileStartPositionY = 5;
+    board = undefined;
+    tiles = [];
 }

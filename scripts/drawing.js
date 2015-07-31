@@ -2,6 +2,8 @@ function drawInitialTiles() {
     var x,
         y;
 
+    // clear canvas when restarting game
+    context.clearRect(0, 0, canvas.width, canvas.height);
     context.fillStyle = 'rgb(107, 187, 201)';
     for (var index in tiles) {
         x = tiles[index].startX;
@@ -18,7 +20,7 @@ function drawGrayTile(tile) {
 function drawTileWithValue(tile) {
     drawGrayTile(tile);
     switch (tile.value) {
-        case '*':
+        case mineSymbol:
             context.fillStyle = 'red';
             break;
         case 1:

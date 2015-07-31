@@ -1,10 +1,16 @@
-function main() {
+function startNewGame() {
     preparePlayingBoard();
     drawInitialTiles();
-    startGame();
+    initializeGame();
 }
 
-main();
+function restart() {
+    resetBoard();
+    resetTilesCounter();
+    startNewGame();
+}
+
+startNewGame();
 
 //function drawTilesAnimated(horizontalTiles, verticalTiles) {
 //    horizontalTiles = horizontalTiles || 10;
