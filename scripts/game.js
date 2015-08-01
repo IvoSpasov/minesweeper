@@ -137,4 +137,3 @@ function initializeGame() {
     addEventListeners();
     clearStatusField();
 }
-

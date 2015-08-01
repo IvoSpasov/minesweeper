@@ -1,15 +1,39 @@
-var horizontalTiles = 9,
-    verticalTiles = 9,
+var horizontalTiles,
+    verticalTiles,
     tileSize = 40,
     tileStartPositionX,
     tileStartPositionY,
     tileStep,
-    numberOfMines = 10,
+    numberOfMines,
     board,
     tiles = [],
     mineSymbol = '*',
     canvas = document.getElementById('mines-canvas'),
     context = canvas.getContext('2d');
+
+function getLevelOfDifficulty () {
+    var radios = document.getElementsByName('difficulty');
+    for(var i in radios) {
+        if (radios[i].checked) {
+            switch (radios[i].id) {
+                case 'easy':
+                    horizontalTiles = 9;
+                    verticalTiles = 9;
+                    numberOfMines = 10;
+                    break;
+                case 'intermediate':
+                    horizontalTiles = 16;
+                    verticalTiles = 16;
+                    numberOfMines = 40;
+                    break;
+                default :
+                    console.log('Not implemented radio for board size.');
+                    break;
+            }
+            break;
+        }
+    }
+}
 
 function createEmptyBoardMatrix() {
     board = new Array(verticalTiles);
@@ -114,11 +138,12 @@ function preparePlayingBoard() {
     tileStep = tileSize + tileStartPositionX;
     board = undefined;
     tiles = [];
+    getLevelOfDifficulty();
     createEmptyBoardMatrix();
     generateRandomlyPositionedMines(numberOfMines);
     calculateValuesBehindTiles();
     generateTiles();
-    printBoardOnConsole();
+    //printBoardOnConsole();
 }
 
 function printBoardOnConsole() {
