@@ -7,7 +7,7 @@ function drawInitialTiles() {
 
     // clear canvas when starting new game
     context.clearRect(0, 0, canvas.width, canvas.height);
-    context.fillStyle = 'rgb(107, 187, 201)';
+    context.fillStyle = 'rgba(146, 186, 209, 1)'; //'rgb(107, 187, 201)';
     for (var index in tiles) {
         x = tiles[index].startX;
         y = tiles[index].startY;

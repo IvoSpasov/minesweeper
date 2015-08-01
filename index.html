@@ -8,14 +8,24 @@
 <body>
     <section>
         <canvas id="mines-canvas" width="725" height="725"></canvas>
-
-        <input type="radio" name="difficulty" id="easy" checked="checked">
-        <label for="easy">Easy 9x9 with 10 mines</label>
-        <input type="radio" name="difficulty" id="intermediate">
-        <label for="intermediate">Intermediate 16x16 with 40 mines</label>
-
-        <div id="game-status"></div>
-        <button id="restart">New game</button>
+        <div id="game-info">
+            <div class="centered">
+                <h1>Minesweeper</h1>
+            </div>
+            <div>
+                <p>Level of difficulty:</p>
+            </div>
+            <div>
+                <input type="radio" name="difficulty" id="easy">
+                <label for="easy">Easy (9x9 with 10 mines)</label>
+            </div>
+            <div>
+                <input type="radio" name="difficulty" id="intermediate" checked="checked">
+                <label for="intermediate">Intermediate (16x16 with 40 mines)</label>
+            </div>
+            <div id="game-status"></div>
+            <button id="restart">New game</button>
+        </div>
     </section>
 
 
