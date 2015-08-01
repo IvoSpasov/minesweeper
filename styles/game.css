@@ -15,17 +15,33 @@ section {
 }
 
 #game-info {
-    width: 50%;
     margin: 5px;
+    padding: 10px;
     font: 25px solid;
-    font-family: consolas;
+    font-family: monospace;
     color: rgb(134, 135, 124);
-}
-
-#game-status {
-
 }
 
 .centered {
     text-align: center;
 }
+
+.button {
+    text-align: right;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#restart-btn {
+    padding: 5px 20px;
+    font-family: monospace;
+    font-size: 18px;
+    color: rgb(146, 186, 209);
+    background-color: rgb(90, 91, 83);
+    border-radius: 4px;
+}
+
+#game-status {
+    padding: 150px 0;
+}
+

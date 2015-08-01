@@ -3,7 +3,7 @@ var tilesWithoutMines,
 
 function addEventListeners() {
     canvas.addEventListener('click', onTileClick, false);
-    document.getElementById('restart').addEventListener('click', startNewGame, false);
+    document.getElementById('restart-btn').addEventListener('click', startNewGame, false);
 }
 
 function removeEventListenerFromCanvas() {
@@ -99,7 +99,7 @@ function countAndCheckForWin() {
 
 function gameWon() {
     var gameWonText = 'Congratulations. You win.';
-    addTextInStatusField(gameWonText);
+    addTextInStatusField(gameWonText, true);
     removeEventListenerFromCanvas();
 }
 
@@ -107,7 +107,7 @@ function gameOver() {
     var currentTile,
         gameOverText = 'You hit a mine. Game Over.';
 
-    addTextInStatusField(gameOverText);
+    addTextInStatusField(gameOverText, false);
     removeEventListenerFromCanvas();
 
     for (var index in tiles) {
@@ -118,8 +118,15 @@ function gameOver() {
     }
 }
 
-function addTextInStatusField(text) {
+function addTextInStatusField(text, isWon) {
     var statusField = document.getElementById('game-status');
+    if (isWon) {
+        statusField.style.color = 'green';
+    }
+    else {
+        statusField.style.color = 'darkred';
+    }
+
     statusField.innerHTML = '<div>' + text + '</div>';
 }
 
