@@ -1,8 +1,11 @@
+var canvas = document.getElementById('mines-canvas'),
+    context = canvas.getContext('2d');
+
 function drawInitialTiles() {
     var x,
         y;
 
-    // clear canvas when restarting game
+    // clear canvas when starting new game
     context.clearRect(0, 0, canvas.width, canvas.height);
     context.fillStyle = 'rgb(107, 187, 201)';
     for (var index in tiles) {

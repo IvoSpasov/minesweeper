@@ -1,7 +1,17 @@
 canvas {
-    border: 1px solid black;
 }
 
 #game-status {
     font: 25px solid;
+}
+
+body {
+    background-image: url("background.jpg");
+}
+
+section {
+    background-color: rgba(0, 0, 0, 0.6);
+    margin: auto;
+    width: 80%;
+    padding: 10px;
 }

@@ -11,14 +11,14 @@ function removeEventListenerFromCanvas() {
 }
 
 function onTileClick(event) {
-    var bodyMarginInPx = 8,
-        x = event.clientX,
-        y = event.clientY,
+    var rect = canvas.getBoundingClientRect(),
+        x = event.clientX - rect.left,
+        y = event.clientY - rect.top,
         tile;
 
     tile = tiles.find(function (tile) {
-        return tile.startX + bodyMarginInPx + tileSize > x &&
-            tile.startY + bodyMarginInPx + tileSize > y;
+        return tile.startX + tileSize > x &&
+            tile.startY + tileSize > y;
     });
 
     if (tile && !tile.isVisited) {

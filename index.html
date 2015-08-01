@@ -6,15 +6,18 @@
     <link href="styles/game.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-    <canvas id="mines-canvas" width="800" height="800"></canvas>
+    <section>
+        <canvas id="mines-canvas" width="725" height="725"></canvas>
 
-    <input type="radio" name="difficulty" id="easy" checked="checked">
-    <label for="easy">Easy 9x9 with 10 mines</label>
-    <input type="radio" name="difficulty" id="intermediate">
-    <label for="intermediate">Intermediate 16x16 with 40 mines</label>
+        <input type="radio" name="difficulty" id="easy" checked="checked">
+        <label for="easy">Easy 9x9 with 10 mines</label>
+        <input type="radio" name="difficulty" id="intermediate">
+        <label for="intermediate">Intermediate 16x16 with 40 mines</label>
 
-    <div id="game-status"></div>
-    <button id="restart">New game</button>
+        <div id="game-status"></div>
+        <button id="restart">New game</button>
+    </section>
+
 
     <script src="scripts/array-methods.js" type="text/javascript"></script>
     <script src="scripts/playing-board.js" type="text/javascript"></script>

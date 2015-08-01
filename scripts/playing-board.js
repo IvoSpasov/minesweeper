@@ -7,9 +7,7 @@ var horizontalTiles,
     numberOfMines,
     board,
     tiles = [],
-    mineSymbol = '*',
-    canvas = document.getElementById('mines-canvas'),
-    context = canvas.getContext('2d');
+    mineSymbol = '*';
 
 function getLevelOfDifficulty () {
     var radios = document.getElementsByName('difficulty');
