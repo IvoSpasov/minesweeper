@@ -1,30 +1,32 @@
 var canvas = document.getElementById('mines-canvas'),
     context = canvas.getContext('2d');
 
-function drawInitialTiles() {
-    var x,
-        y;
-
-    // clear canvas when starting new game
-    context.clearRect(0, 0, canvas.width, canvas.height);
-    context.fillStyle = 'rgba(146, 186, 209, 1)'; //'rgb(107, 187, 201)';
-    for (var index in tiles) {
-        x = tiles[index].startX;
-        y = tiles[index].startY;
-        context.fillRect(x, y, tileSize, tileSize);
+function drawOneTile(tile, isGrey) {
+    if (isGrey) {
+        context.fillStyle = 'grey';
     }
+    else
+    {
+        context.fillStyle = 'rgba(146, 186, 209, 1)'; //'rgb(107, 187, 201)';
+    }
+
+    context.fillRect(tile.startX, tile.startY, tileSize, tileSize);
 }
 
-function drawGrayTile(tile) {
-    context.fillStyle = 'grey';
-    context.fillRect(tile.startX, tile.startY, tileSize, tileSize);
+function drawInitialTiles() {
+    // clear canvas when starting new game
+    context.clearRect(0, 0, canvas.width, canvas.height);
+
+    for (var index in tiles) {
+        drawOneTile(tiles[index], false);
+    }
 }
 
 function drawTileWithValue(tile) {
     var valueXOffset = 13,
         valueYOffset = 30;
 
-    drawGrayTile(tile);
+    drawOneTile(tile, true);
     switch (tile.value) {
         case mineSymbol:
             context.fillStyle = 'red';
@@ -51,4 +53,13 @@ function drawTileWithValue(tile) {
 
     context.font = 'bold 28px Consolas';
     context.fillText(tile.value, tile.startX + valueXOffset, tile.startY + valueYOffset);
+}
+
+function drawMineFlag(tile) {
+    var valueXOffset = 13,
+        valueYOffset = 30;
+
+    context.fillStyle = 'red';
+    context.font = 'bold 28px Consolas';
+    context.fillText('M', tile.startX + valueXOffset, tile.startY + valueYOffset);
 }

@@ -104,14 +104,15 @@ function isValidPosition(row, col) {
     return board[row][col] !== mineSymbol;
 }
 
-function createTile(startX, startY, row, col, value, isVisited) {
+function createTile(startX, startY, row, col, value, isVisited, hasMineFlag) {
     return {
         startX: startX,
         startY: startY,
         row: row,
         col: col,
         value: value,
-        isVisited: isVisited
+        isVisited: isVisited,
+        hasMineFlag: hasMineFlag
     }
 }
 
@@ -120,7 +121,7 @@ function generateTiles() {
 
     for (var row = 0; row < verticalTiles; row += 1) {
         for (var col = 0; col < horizontalTiles; col += 1) {
-            newTile = createTile(tileStartPositionX, tileStartPositionY, row, col, board[row][col], false);
+            newTile = createTile(tileStartPositionX, tileStartPositionY, row, col, board[row][col], false, false);
             tiles.push(newTile);
             tileStartPositionX += tileStep;
         }

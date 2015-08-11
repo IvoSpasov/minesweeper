@@ -3,14 +3,48 @@ var tilesWithoutMines,
 
 function addEventListeners() {
     canvas.addEventListener('click', onTileClick, false);
+    canvas.addEventListener('contextmenu', onTileRightClick, false);
     document.getElementById('restart-btn').addEventListener('click', startNewGame, false);
 }
 
-function removeEventListenerFromCanvas() {
+function removeEventListenersFromCanvas() {
     canvas.removeEventListener('click', onTileClick, false);
+    canvas.removeEventListener('contextmenu', onTileRightClick, false);
 }
 
 function onTileClick(event) {
+    var tile;
+
+    // To enable only left mouse button click. Scroll is disabled
+    if (event.button === 0) {
+        tile = getClickedTile(event);
+        if (tile && !tile.isVisited) {
+            showBehindTile(tile);
+        }
+    }
+}
+
+function onTileRightClick(event) {
+    var tile;
+
+    // disable menu
+    event.preventDefault();
+    
+    tile = getClickedTile(event);
+    if (tile && !tile.isVisited) {
+        if (!tile.hasMineFlag) {
+            tile.hasMineFlag = true;
+            drawMineFlag(tile);
+        }
+        else {
+            tile.hasMineFlag = false;
+            drawOneTile(tile, false);
+        }
+    }
+}
+
+
+function getClickedTile(event) {
     var rect = canvas.getBoundingClientRect(),
         x = event.clientX - rect.left,
         y = event.clientY - rect.top,
@@ -21,9 +55,7 @@ function onTileClick(event) {
             tile.startY + tileSize > y;
     });
 
-    if (tile && !tile.isVisited) {
-        showBehindTile(tile);
-    }
+    return tile;
 }
 
 function showBehindTile(tile) {
@@ -74,7 +106,7 @@ function showAllTilesWithoutValue(row, col) {
     }
 
     // if everything is ok then draw the grey tile that was reached
-    drawGrayTile(currentTile);
+    drawOneTile(currentTile, true);
 
     // Invoke recursion to explore all possible directions
     showAllTilesWithoutValue(row, col - 1); // left
@@ -100,7 +132,7 @@ function countAndCheckForWin() {
 function gameWon() {
     var gameWonText = 'Congratulations. You win.';
     addTextInStatusField(gameWonText, true);
-    removeEventListenerFromCanvas();
+    removeEventListenersFromCanvas();
 }
 
 function gameOver() {
@@ -108,7 +140,7 @@ function gameOver() {
         gameOverText = 'You hit a mine. Game Over.';
 
     addTextInStatusField(gameOverText, false);
-    removeEventListenerFromCanvas();
+    removeEventListenersFromCanvas();
 
     for (var index in tiles) {
         currentTile = tiles[index];
