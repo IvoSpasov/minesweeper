@@ -18,7 +18,7 @@ function onTileClick(event) {
     // To enable only left mouse button click. Scroll is disabled
     if (event.button === 0) {
         tile = getClickedTile(event);
-        if (tile && !tile.isVisited) {
+        if (tile && !tile.isVisited && !tile.hasMineFlag) {
             showBehindTile(tile);
         }
     }
