@@ -29,7 +29,7 @@ function onTileRightClick(event) {
 
     // disable menu
     event.preventDefault();
-    
+
     tile = getClickedTile(event);
     if (tile && !tile.isVisited) {
         if (!tile.hasMineFlag) {

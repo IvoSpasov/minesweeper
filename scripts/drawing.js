@@ -1,12 +1,14 @@
 var canvas = document.getElementById('mines-canvas'),
-    context = canvas.getContext('2d');
+    context = canvas.getContext('2d'),
+    valueXOffset = 13,
+    valueYOffset = 30,
+    fontStyle = 'bold 28px Consolas';
 
 function drawOneTile(tile, isGrey) {
     if (isGrey) {
         context.fillStyle = 'grey';
     }
-    else
-    {
+    else {
         context.fillStyle = 'rgba(146, 186, 209, 1)'; //'rgb(107, 187, 201)';
     }
 
@@ -23,9 +25,6 @@ function drawInitialTiles() {
 }
 
 function drawTileWithValue(tile) {
-    var valueXOffset = 13,
-        valueYOffset = 30;
-
     drawOneTile(tile, true);
     switch (tile.value) {
         case mineSymbol:
@@ -51,15 +50,12 @@ function drawTileWithValue(tile) {
             break;
     }
 
-    context.font = 'bold 28px Consolas';
+    context.font = fontStyle;
     context.fillText(tile.value, tile.startX + valueXOffset, tile.startY + valueYOffset);
 }
 
 function drawMineFlag(tile) {
-    var valueXOffset = 13,
-        valueYOffset = 30;
-
     context.fillStyle = 'red';
-    context.font = 'bold 28px Consolas';
+    context.font = fontStyle;
     context.fillText('M', tile.startX + valueXOffset, tile.startY + valueYOffset);
 }
