@@ -4,12 +4,11 @@ var tilesWithoutMines,
 function addEventListeners() {
     canvas.addEventListener('click', onTileClick, false);
     canvas.addEventListener('contextmenu', onTileRightClick, false);
-    //document.getElementById('restart-btn').addEventListener('click', startNewGame, false);
     document.getElementById('easy').addEventListener('click', startEasyGame, false);
     document.getElementById('intermediate').addEventListener('click', startIntermediateGame, false);
 }
 
-function startEasyGame(){
+function startEasyGame() {
     gameDifficulty = 'easy';
     startNewGame();
 }
@@ -54,7 +53,6 @@ function onTileRightClick(event) {
         }
     }
 }
-
 
 function getClickedTile(event) {
     var rect = canvas.getBoundingClientRect(),
@@ -142,16 +140,15 @@ function countAndCheckForWin() {
 }
 
 function gameWon() {
-    var gameWonText = 'Congratulations. You win.';
-    addTextInStatusField(gameWonText, true);
+    $('.alert-success').removeClass('hidden');
     removeEventListenersFromCanvas();
 }
 
+// TODO: separate this function to two. One for uncovering all mines
 function gameOver() {
-    var currentTile,
-        gameOverText = 'You hit a mine. Game Over.';
+    var currentTile;
 
-    addTextInStatusField(gameOverText, false);
+    $('.alert-danger').removeClass('hidden');
     removeEventListenersFromCanvas();
 
     for (var index in tiles) {
@@ -162,20 +159,9 @@ function gameOver() {
     }
 }
 
-function addTextInStatusField(text, isWon) {
-    var statusField = document.getElementById('game-status');
-    if (isWon) {
-        statusField.style.color = 'green';
-    }
-    else {
-        statusField.style.color = 'darkred';
-    }
-
-    statusField.innerHTML = '<div>' + text + '</div>';
-}
-
-function clearStatusField() {
-    addTextInStatusField('');
+function hideAlertMessages() {
+    $('.alert-danger').addClass('hidden');
+    $('.alert-success').addClass('hidden');
 }
 
 function setTilesCounters() {
@@ -183,10 +169,8 @@ function setTilesCounters() {
     tilesWithoutMinesCounter = 0;
 }
 
-
-
 function initializeGame() {
     setTilesCounters();
     addEventListeners();
-    clearStatusField();
+    hideAlertMessages();
 }

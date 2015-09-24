@@ -23,30 +23,9 @@ function getLevelOfDifficulty() {
             numberOfMines = 40;
             break;
         default :
-            console.log('Not implemented radio for board size.');
+            console.log('Not implemented game difficulty.');
             break;
     }
-    //var radios = document.getElementsByName('difficulty');
-    //for(var i in radios) {
-    //    if (radios[i].checked) {
-    //        switch (radios[i].id) {
-    //            case 'easy':
-    //                horizontalTiles = 9;
-    //                verticalTiles = 9;
-    //                numberOfMines = 10;
-    //                break;
-    //            case 'intermediate':
-    //                horizontalTiles = 16;
-    //                verticalTiles = 16;
-    //                numberOfMines = 40;
-    //                break;
-    //            default :
-    //                console.log('Not implemented radio for board size.');
-    //                break;
-    //        }
-    //        break;
-    //    }
-    //}
 }
 
 function createEmptyBoardMatrix() {
