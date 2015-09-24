@@ -4,7 +4,19 @@ var tilesWithoutMines,
 function addEventListeners() {
     canvas.addEventListener('click', onTileClick, false);
     canvas.addEventListener('contextmenu', onTileRightClick, false);
-    document.getElementById('restart-btn').addEventListener('click', startNewGame, false);
+    //document.getElementById('restart-btn').addEventListener('click', startNewGame, false);
+    document.getElementById('easy').addEventListener('click', startEasyGame, false);
+    document.getElementById('intermediate').addEventListener('click', startIntermediateGame, false);
+}
+
+function startEasyGame(){
+    gameDifficulty = 'easy';
+    startNewGame();
+}
+
+function startIntermediateGame() {
+    gameDifficulty = 'intermediate';
+    startNewGame();
 }
 
 function removeEventListenersFromCanvas() {
@@ -170,6 +182,8 @@ function setTilesCounters() {
     tilesWithoutMines = (verticalTiles * horizontalTiles) - numberOfMines;
     tilesWithoutMinesCounter = 0;
 }
+
+
 
 function initializeGame() {
     setTilesCounters();

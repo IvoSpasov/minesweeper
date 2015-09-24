@@ -7,30 +7,46 @@ var horizontalTiles,
     numberOfMines,
     board,
     tiles = [],
-    mineSymbol = '*';
+    mineSymbol = '*',
+    gameDifficulty = 'intermediate';
 
-function getLevelOfDifficulty () {
-    var radios = document.getElementsByName('difficulty');
-    for(var i in radios) {
-        if (radios[i].checked) {
-            switch (radios[i].id) {
-                case 'easy':
-                    horizontalTiles = 9;
-                    verticalTiles = 9;
-                    numberOfMines = 10;
-                    break;
-                case 'intermediate':
-                    horizontalTiles = 16;
-                    verticalTiles = 16;
-                    numberOfMines = 40;
-                    break;
-                default :
-                    console.log('Not implemented radio for board size.');
-                    break;
-            }
+function getLevelOfDifficulty() {
+    switch (gameDifficulty) {
+        case 'easy':
+            horizontalTiles = 9;
+            verticalTiles = 9;
+            numberOfMines = 10;
             break;
-        }
+        case 'intermediate':
+            horizontalTiles = 16;
+            verticalTiles = 16;
+            numberOfMines = 40;
+            break;
+        default :
+            console.log('Not implemented radio for board size.');
+            break;
     }
+    //var radios = document.getElementsByName('difficulty');
+    //for(var i in radios) {
+    //    if (radios[i].checked) {
+    //        switch (radios[i].id) {
+    //            case 'easy':
+    //                horizontalTiles = 9;
+    //                verticalTiles = 9;
+    //                numberOfMines = 10;
+    //                break;
+    //            case 'intermediate':
+    //                horizontalTiles = 16;
+    //                verticalTiles = 16;
+    //                numberOfMines = 40;
+    //                break;
+    //            default :
+    //                console.log('Not implemented radio for board size.');
+    //                break;
+    //        }
+    //        break;
+    //    }
+    //}
 }
 
 function createEmptyBoardMatrix() {
