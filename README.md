@@ -1,6 +1,6 @@
 # Minesweeper
 
-This is a JavaScript version of the popular Windows game Minesweeper. 
+This is a JavaScript version of the popular Microsoft Windows game Minesweeper. 
 
 ### Game Rules
 The rules are the same as in the original game:
