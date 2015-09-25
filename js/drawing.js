@@ -1,8 +1,13 @@
-var canvas = $('#mines-canvas')[0],
-    context = canvas.getContext('2d'),
+var canvas,
+    context,
     valueXOffset = 13,
     valueYOffset = 30,
     fontStyle = 'bold 28px Consolas';
+
+function prepareCanvas(width, height) {
+    canvas = $('#mines-canvas').attr('width', width).attr('height', height)[0];
+    context = canvas.getContext('2d');
+}
 
 function drawSingleTile(tile, tileSizeInPx, isOpened) {
     if (isOpened) {

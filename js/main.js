@@ -4,6 +4,7 @@ function startNewGame(level) {
 
     gameSettings = prepareGameSettings(level);
     tiles = preparePlayingBoard(gameSettings);
+    prepareCanvas(gameSettings.canvasWidth, gameSettings.canvasHeight);
     drawInitialTiles(tiles, gameSettings.tileSizeInPx);
     initializeGame(tiles, gameSettings);
 }

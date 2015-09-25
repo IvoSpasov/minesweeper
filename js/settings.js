@@ -23,15 +23,26 @@ function prepareGameSettings(level) {
         TILES_OFFSET_FROM_CANVAS_IN_PX = 5,
         GAP_BETWEEN_TILES_IN_PX = 3,
         MINE_SYMBOL = '*',
-        gameDifficulty;
+        gameDifficulty,
+        canvasWidth,
+        canvasHeight;
 
     gameDifficulty = generateGameDifficulty(level);
+    canvasWidth = (2 * TILES_OFFSET_FROM_CANVAS_IN_PX) +
+        (TILE_SIZE_IN_PX * gameDifficulty.horizontalTiles) +
+        (GAP_BETWEEN_TILES_IN_PX * (gameDifficulty.horizontalTiles - 1));
+    canvasHeight = (2 * TILES_OFFSET_FROM_CANVAS_IN_PX) +
+        (TILE_SIZE_IN_PX * gameDifficulty.verticalTiles) +
+        (GAP_BETWEEN_TILES_IN_PX * (gameDifficulty.verticalTiles - 1));
+
 
     return {
         tileSizeInPx: TILE_SIZE_IN_PX,
         tilesOffsetFromCanvasInPx: TILES_OFFSET_FROM_CANVAS_IN_PX,
         gapBetweenTilesInPx: GAP_BETWEEN_TILES_IN_PX,
         mineSymbol: MINE_SYMBOL,
-        difficulty: gameDifficulty
+        difficulty: gameDifficulty,
+        canvasWidth: canvasWidth,
+        canvasHeight: canvasHeight
     }
 }
