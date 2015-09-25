@@ -8,4 +8,11 @@ function startNewGame(level) {
     initializeGame(tiles, gameSettings);
 }
 
+function restartGame() {
+    var level = $(this)[0].id;
+    startNewGame(level);
+}
+
+$('#difficulty').on('click', 'a', restartGame);
+
 startNewGame('intermediate');

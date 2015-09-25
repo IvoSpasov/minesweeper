@@ -1,32 +1,17 @@
 var tilesWithoutMines,
     tilesWithoutMinesCounter;
 
-function addEventListeners(tiles, settings) {
+function addEventListenersOnCanvas(tiles, settings) {
     $('canvas').on('click', {tiles: tiles, settings: settings}, onTileLeftClick);
     $('canvas').on('contextmenu', {tiles: tiles, settings: settings}, onTileRightClick);
-    //canvas.addEventListener('click', onTileLeftClick(settings), false);
-    //canvas.addEventListener('contextmenu', onTileRightClick, false);
-    document.getElementById('easy').addEventListener('click', startEasyGame, false);
-    document.getElementById('intermediate').addEventListener('click', startIntermediateGame, false);
-}
-
-function startEasyGame() {
-    startNewGame('easy');
-}
-
-function startIntermediateGame() {
-    startNewGame('intermediate');
 }
 
 function removeEventListenersFromCanvas() {
     $('canvas').off('click', onTileLeftClick);
     $('canvas').off('contextmenu', onTileRightClick);
-    //canvas.removeEventListener('click', onTileLeftClick, false);
-    //canvas.removeEventListener('contextmenu', onTileRightClick, false);
 }
 
 function onTileLeftClick(event) {
-    //debugger;
     var tiles = event.data.tiles,
         settings = event.data.settings,
         tile;
@@ -41,7 +26,6 @@ function onTileLeftClick(event) {
 }
 
 function onTileRightClick(event) {
-    //debugger;
     var tiles = event.data.tiles,
         settings = event.data.settings,
         tile;
@@ -180,6 +164,6 @@ function setTilesCounters(settings) {
 
 function initializeGame(tiles, settings) {
     setTilesCounters(settings);
-    addEventListeners(tiles, settings);
+    addEventListenersOnCanvas(tiles, settings);
     hideAlertMessages();
 }
