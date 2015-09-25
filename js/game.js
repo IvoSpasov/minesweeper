@@ -164,6 +164,7 @@ function setTilesCounters(settings) {
 
 function initializeGame(tiles, settings) {
     setTilesCounters(settings);
+    removeEventListenersFromCanvas();
     addEventListenersOnCanvas(tiles, settings);
     hideAlertMessages();
 }
