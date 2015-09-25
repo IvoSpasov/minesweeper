@@ -4,7 +4,7 @@ var canvas = document.getElementById('mines-canvas'),
     valueYOffset = 30,
     fontStyle = 'bold 28px Consolas';
 
-function drawSingleTile(tile, isOpened) {
+function drawSingleTile(tile, tileSizeInPx, isOpened) {
     if (isOpened) {
         context.fillStyle = 'grey';
     }
@@ -15,19 +15,19 @@ function drawSingleTile(tile, isOpened) {
     context.fillRect(tile.startXinPx, tile.startYinPx, tileSizeInPx, tileSizeInPx);
 }
 
-function drawInitialTiles() {
+function drawInitialTiles(tiles, tileSizeInPx) {
     // clear canvas when starting new game
     context.clearRect(0, 0, canvas.width, canvas.height);
 
     for (var index in tiles) {
-        drawSingleTile(tiles[index], false);
+        drawSingleTile(tiles[index], tileSizeInPx, false);
     }
 }
 
-function drawTileWithValue(tile) {
-    drawSingleTile(tile, true);
+function drawTileWithValue(tile, settings) {
+    drawSingleTile(tile, settings.tileSizeInPx, true);
     switch (tile.value) {
-        case mineSymbol:
+        case settings.mineSymbol:
             context.fillStyle = 'red';
             break;
         case 1:

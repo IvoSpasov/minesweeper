@@ -1,7 +1,11 @@
 function startNewGame(level) {
-    preparePlayingBoard(level);
-    drawInitialTiles(); // needs tiles
-    initializeGame(); // needs verticalTiles, horizontalTiles, tiles, board..
+    var gameSettings,
+        tiles;
+
+    gameSettings = prepareGameSettings(level);
+    tiles = preparePlayingBoard(gameSettings);
+    drawInitialTiles(tiles, gameSettings.tileSizeInPx);
+    initializeGame(tiles, gameSettings);
 }
 
 startNewGame('intermediate');

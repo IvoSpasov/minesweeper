@@ -1,9 +1,11 @@
 var tilesWithoutMines,
     tilesWithoutMinesCounter;
 
-function addEventListeners() {
-    canvas.addEventListener('click', onTileClick, false);
-    canvas.addEventListener('contextmenu', onTileRightClick, false);
+function addEventListeners(tiles, settings) {
+    $('canvas').on('click', {tiles: tiles, settings: settings}, onTileLeftClick);
+    $('canvas').on('contextmenu', {tiles: tiles, settings: settings}, onTileRightClick);
+    //canvas.addEventListener('click', onTileLeftClick(settings), false);
+    //canvas.addEventListener('contextmenu', onTileRightClick, false);
     document.getElementById('easy').addEventListener('click', startEasyGame, false);
     document.getElementById('intermediate').addEventListener('click', startIntermediateGame, false);
 }
@@ -17,29 +19,37 @@ function startIntermediateGame() {
 }
 
 function removeEventListenersFromCanvas() {
-    canvas.removeEventListener('click', onTileClick, false);
-    canvas.removeEventListener('contextmenu', onTileRightClick, false);
+    $('canvas').off('click', onTileLeftClick);
+    $('canvas').off('contextmenu', onTileRightClick);
+    //canvas.removeEventListener('click', onTileLeftClick, false);
+    //canvas.removeEventListener('contextmenu', onTileRightClick, false);
 }
 
-function onTileClick(event) {
-    var tile;
+function onTileLeftClick(event) {
+    //debugger;
+    var tiles = event.data.tiles,
+        settings = event.data.settings,
+        tile;
 
     // To enable only left mouse button click. Scroll is disabled
     if (event.button === 0) {
-        tile = getClickedTile(event);
+        tile = getClickedTile(event, tiles, settings);
         if (tile && !tile.isVisited && !tile.hasMineFlag) {
-            showBehindTile(tile);
+            showBehindTile(tile, tiles, settings);
         }
     }
 }
 
 function onTileRightClick(event) {
-    var tile;
+    //debugger;
+    var tiles = event.data.tiles,
+        settings = event.data.settings,
+        tile;
 
     // disable menu
     event.preventDefault();
 
-    tile = getClickedTile(event);
+    tile = getClickedTile(event, tiles, settings);
     if (tile && !tile.isVisited) {
         if (!tile.hasMineFlag) {
             tile.hasMineFlag = true;
@@ -47,50 +57,50 @@ function onTileRightClick(event) {
         }
         else {
             tile.hasMineFlag = false;
-            drawSingleTile(tile, false);
+            drawSingleTile(tile, settings.tileSizeInPx, false);
         }
     }
 }
 
-function getClickedTile(event) {
+function getClickedTile(event, tiles, settings) {
     var rect = canvas.getBoundingClientRect(),
         x = event.clientX - rect.left,
         y = event.clientY - rect.top,
         tile;
 
     tile = tiles.find(function (tile) {
-        return tile.startXinPx + tileSizeInPx > x &&
-            tile.startYinPx + tileSizeInPx > y;
+        return tile.startXinPx + settings.tileSizeInPx > x &&
+            tile.startYinPx + settings.tileSizeInPx > y;
     });
 
     return tile;
 }
 
-function showBehindTile(tile) {
+function showBehindTile(tile, tiles, settings) {
     if (tile.value === 0) {
-        showAllTilesWithoutValue(tile.row, tile.col);
+        showAllTilesWithoutValue(tile.row, tile.col, tiles, settings);
     }
     else if (tile.value === '*') {
-        gameOver();
+        gameOver(tiles, settings);
     }
     else {
         tile.isVisited = true;
-        drawTileWithValue(tile);
+        drawTileWithValue(tile, settings);
         countAndCheckForWin();
     }
 }
 
-function isInBoard(row, col) {
-    var rowInRange = 0 <= row && row < verticalTiles,
-        colInRange = 0 <= col && col < horizontalTiles;
+function isInBoard(row, col, settings) {
+    var rowInRange = 0 <= row && row < settings.difficulty.verticalTiles,
+        colInRange = 0 <= col && col < settings.difficulty.horizontalTiles;
     return rowInRange && colInRange;
 }
 
-function showAllTilesWithoutValue(row, col) {
+function showAllTilesWithoutValue(row, col, tiles, settings) {
     var currentTile;
 
     // if we are outside the board then stop
-    if (!isInBoard(row, col)) {
+    if (!isInBoard(row, col, settings)) {
         return;
     }
 
@@ -109,24 +119,24 @@ function showAllTilesWithoutValue(row, col) {
 
     // when we reach tile indicating the number of mines then draw it and stop
     if (currentTile.value !== 0) {
-        drawTileWithValue(currentTile);
+        drawTileWithValue(currentTile, settings);
         return;
     }
 
     // if everything is ok then draw the grey tile that was reached
-    drawSingleTile(currentTile, true);
+    drawSingleTile(currentTile, settings.tileSizeInPx, true);
 
     // Invoke recursion to explore all possible directions
-    showAllTilesWithoutValue(row, col - 1); // left
-    showAllTilesWithoutValue(row - 1, col); // up
-    showAllTilesWithoutValue(row, col + 1); // right
-    showAllTilesWithoutValue(row + 1, col); // down
+    showAllTilesWithoutValue(row, col - 1, tiles, settings); // left
+    showAllTilesWithoutValue(row - 1, col, tiles, settings); // up
+    showAllTilesWithoutValue(row, col + 1, tiles, settings); // right
+    showAllTilesWithoutValue(row + 1, col, tiles, settings); // down
 
     // diagonally as well to open tiles with values in corners
-    showAllTilesWithoutValue(row - 1, col - 1); // 10 o'clock
-    showAllTilesWithoutValue(row - 1, col + 1); // 2 o'clock
-    showAllTilesWithoutValue(row + 1, col + 1); // 4 o'clock
-    showAllTilesWithoutValue(row + 1, col - 1); // 8 o'clock
+    showAllTilesWithoutValue(row - 1, col - 1, tiles, settings); // 10 o'clock
+    showAllTilesWithoutValue(row - 1, col + 1, tiles, settings); // 2 o'clock
+    showAllTilesWithoutValue(row + 1, col + 1, tiles, settings); // 4 o'clock
+    showAllTilesWithoutValue(row + 1, col - 1, tiles, settings); // 8 o'clock
 }
 
 function countAndCheckForWin() {
@@ -143,7 +153,7 @@ function gameWon() {
 }
 
 // TODO: separate this function to two. One for uncovering all mines
-function gameOver() {
+function gameOver(tiles, settings) {
     var currentTile;
 
     $('.alert-danger').removeClass('hidden');
@@ -151,8 +161,8 @@ function gameOver() {
 
     for (var index in tiles) {
         currentTile = tiles[index];
-        if (currentTile.value === mineSymbol) {
-            drawTileWithValue(currentTile);
+        if (currentTile.value === settings.mineSymbol) {
+            drawTileWithValue(currentTile, settings);
         }
     }
 }
@@ -162,13 +172,14 @@ function hideAlertMessages() {
     $('.alert-success').addClass('hidden');
 }
 
-function setTilesCounters() {
-    tilesWithoutMines = (verticalTiles * horizontalTiles) - numberOfMines;
+function setTilesCounters(settings) {
+    tilesWithoutMines = (settings.difficulty.verticalTiles * settings.difficulty.horizontalTiles)
+        - settings.difficulty.numberOfMines;
     tilesWithoutMinesCounter = 0;
 }
 
-function initializeGame() {
-    setTilesCounters();
-    addEventListeners();
+function initializeGame(tiles, settings) {
+    setTilesCounters(settings);
+    addEventListeners(tiles, settings);
     hideAlertMessages();
 }

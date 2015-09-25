@@ -1,31 +1,3 @@
-var horizontalTiles,
-    verticalTiles,
-    numberOfMines,
-    tileSizeInPx = 40,
-    tiles = [],
-    mineSymbol = '*';
-
-function createGameDifficulty(level, verticalTiles, horizontalTiles, numberOfMines) {
-    return {
-        level: level,
-        verticalTiles: verticalTiles,
-        horizontalTiles: horizontalTiles,
-        numberOfMines: numberOfMines
-    }
-}
-
-function generateGameDifficulty(level) {
-    switch (level) {
-        case 'easy':
-            return createGameDifficulty('easy', 9, 9, 10);
-        case 'intermediate':
-            return createGameDifficulty('intermediate', 10, 16, 20);
-        default :
-            console.log('Not implemented game difficulty.');
-            break;
-    }
-}
-
 function createEmptyMatrix(rows, cols) {
     var matrix = new Array(rows);
     for (var row = 0; row < rows; row += 1) {
@@ -130,18 +102,16 @@ function createTile(startXinPx, startYinPx, row, col, value, isVisited, hasMineF
     }
 }
 
-function generateTiles(board) {
-    var TILES_OFFSET_FROM_CANVAS_IN_PX = 5,
-        GAP_BETWEEN_TILES_IN_PX = 2,
-        rows = board.length,
+function generateTiles(board, settings) {
+    var rows = board.length,
         cols = board[0].length,
         tiles = [],
-        tileStartPositionXinPx = TILES_OFFSET_FROM_CANVAS_IN_PX,
-        tileStartPositionYinPx = TILES_OFFSET_FROM_CANVAS_IN_PX,
+        tileStartPositionXinPx = settings.tilesOffsetFromCanvasInPx,
+        tileStartPositionYinPx = settings.tilesOffsetFromCanvasInPx,
         newTile,
         tileStepInPx;
 
-    tileStepInPx = tileSizeInPx + GAP_BETWEEN_TILES_IN_PX;
+    tileStepInPx = settings.tileSizeInPx + settings.gapBetweenTilesInPx;
 
     for (var row = 0; row < rows; row += 1) {
         for (var col = 0; col < cols; col += 1) {
@@ -150,29 +120,24 @@ function generateTiles(board) {
             tileStartPositionXinPx += tileStepInPx;
         }
 
-        tileStartPositionXinPx = TILES_OFFSET_FROM_CANVAS_IN_PX;
+        tileStartPositionXinPx = settings.tilesOffsetFromCanvasInPx;
         tileStartPositionYinPx += tileStepInPx;
     }
 
     return tiles;
 }
 
-function preparePlayingBoard(level) {
-    var gameDifficulty,
-        board;
+function preparePlayingBoard(settings) {
+    var board,
+        tiles;
 
-    gameDifficulty = generateGameDifficulty(level);
-
-    numberOfMines = gameDifficulty.numberOfMines;
-    verticalTiles = gameDifficulty.verticalTiles;
-    horizontalTiles = gameDifficulty.horizontalTiles;
-
-    board = createEmptyMatrix(gameDifficulty.verticalTiles, gameDifficulty.horizontalTiles);
+    board = createEmptyMatrix(settings.difficulty.verticalTiles, settings.difficulty.horizontalTiles);
     fillMatrixWithZeros(board);
-    generateRandomlyPositionedMines(board, gameDifficulty.numberOfMines, mineSymbol);
-    calculateValuesBehindTiles(board, mineSymbol);
-    tiles = generateTiles(board);
+    generateRandomlyPositionedMines(board, settings.difficulty.numberOfMines, settings.mineSymbol);
+    calculateValuesBehindTiles(board, settings.mineSymbol);
+    tiles = generateTiles(board, settings);
 
+    return tiles;
     //printBoardOnConsole(board);
 }
 
