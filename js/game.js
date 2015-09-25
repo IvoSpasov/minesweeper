@@ -47,7 +47,7 @@ function onTileRightClick(event) {
         }
         else {
             tile.hasMineFlag = false;
-            drawOneTile(tile, false);
+            drawSingleTile(tile, false);
         }
     }
 }
@@ -114,7 +114,7 @@ function showAllTilesWithoutValue(row, col) {
     }
 
     // if everything is ok then draw the grey tile that was reached
-    drawOneTile(currentTile, true);
+    drawSingleTile(currentTile, true);
 
     // Invoke recursion to explore all possible directions
     showAllTilesWithoutValue(row, col - 1); // left

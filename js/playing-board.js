@@ -1,7 +1,7 @@
 var horizontalTiles,
     verticalTiles,
-    tileSizeInPx = 40,
     numberOfMines,
+    tileSizeInPx = 40,
     tiles = [],
     mineSymbol = '*';
 

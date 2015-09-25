@@ -4,12 +4,12 @@ var canvas = document.getElementById('mines-canvas'),
     valueYOffset = 30,
     fontStyle = 'bold 28px Consolas';
 
-function drawOneTile(tile, isOpened) {
+function drawSingleTile(tile, isOpened) {
     if (isOpened) {
         context.fillStyle = 'grey';
     }
     else {
-        context.fillStyle = 'rgba(146, 186, 209, 1)'; //'rgb(107, 187, 201)';
+        context.fillStyle = 'rgba(146, 186, 209, 1)';
     }
 
     context.fillRect(tile.startXinPx, tile.startYinPx, tileSizeInPx, tileSizeInPx);
@@ -20,12 +20,12 @@ function drawInitialTiles() {
     context.clearRect(0, 0, canvas.width, canvas.height);
 
     for (var index in tiles) {
-        drawOneTile(tiles[index], false);
+        drawSingleTile(tiles[index], false);
     }
 }
 
 function drawTileWithValue(tile) {
-    drawOneTile(tile, true);
+    drawSingleTile(tile, true);
     switch (tile.value) {
         case mineSymbol:
             context.fillStyle = 'red';
