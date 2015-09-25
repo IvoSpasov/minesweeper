@@ -28,14 +28,21 @@ function getLevelOfDifficulty() {
     }
 }
 
-function createEmptyBoardMatrix() {
-    board = new Array(verticalTiles);
-    for (var i = 0; i < verticalTiles; i += 1) {
-        board[i] = new Array(horizontalTiles);
+function createEmptyMatrix(rows, cols) {
+    var matrix = new Array(rows);
+    for (var row = 0; row < rows; row += 1) {
+        matrix[row] = new Array(cols);
     }
 
-    for (var row = 0; row < verticalTiles; row += 1) {
-        for (var col = 0; col < verticalTiles; col += 1) {
+    return matrix;
+}
+
+function fillMatrixWithZeros(matrix){
+    var rows = matrix[0].length,
+        cols = matrix[1].length;
+
+    for (var row = 0; row < rows; row += 1) {
+        for (var col = 0; col < cols; col += 1) {
             board[row][col] = 0;
         }
     }
@@ -130,10 +137,11 @@ function preparePlayingBoard() {
     tileStartPositionX = 5;
     tileStartPositionY = 5;
     tileStep = tileSize + tileStartPositionX;
-    board = undefined;
+    //board = undefined;
     tiles = [];
     getLevelOfDifficulty();
-    createEmptyBoardMatrix();
+    board = createEmptyMatrix(verticalTiles, horizontalTiles);
+    fillMatrixWithZeros(board);
     generateRandomlyPositionedMines(numberOfMines);
     calculateValuesBehindTiles();
     generateTiles();
