@@ -8,11 +8,11 @@ var horizontalTiles,
     tiles = [],
     mineSymbol = '*';
 
-function createGameDifficulty(level, horizontalTiles, verticalTiles, numberOfMines) {
+function createGameDifficulty(level,verticalTiles, horizontalTiles, numberOfMines) {
     return {
         level: level,
-        horizontalTiles: horizontalTiles,
         verticalTiles: verticalTiles,
+        horizontalTiles: horizontalTiles,
         numberOfMines: numberOfMines
     }
 }
@@ -22,7 +22,7 @@ function generateGameDifficulty(level) {
         case 'easy':
             return createGameDifficulty('easy', 9, 9, 10);
         case 'intermediate':
-            return createGameDifficulty('intermediate', 16, 16, 40);
+            return createGameDifficulty('intermediate', 10, 16, 20);
         default :
             console.log('Not implemented game difficulty.');
             break;
@@ -39,8 +39,8 @@ function createEmptyMatrix(rows, cols) {
 }
 
 function fillMatrixWithZeros(matrix) {
-    var rows = matrix[0].length,
-        cols = matrix[1].length;
+    var rows = matrix.length,
+        cols = matrix[0].length;
 
     for (var row = 0; row < rows; row += 1) {
         for (var col = 0; col < cols; col += 1) {
@@ -56,8 +56,8 @@ function getRandomInt(min, max) {
 }
 
 function generateRandomlyPositionedMines(board, numberOfMines, mineSymbol) {
-    var rows = board[0].length,
-        cols = board[1].length,
+    var rows = board.length,
+        cols = board[0].length,
         randomRowPosition,
         randomColPosition,
         minesCounter = 0;
@@ -73,8 +73,8 @@ function generateRandomlyPositionedMines(board, numberOfMines, mineSymbol) {
 }
 
 function calculateValuesBehindTiles(board, mineSymbol) {
-    var rows = board[0].length,
-        cols = board[1].length;
+    var rows = board.length,
+        cols = board[0].length;
 
     for (var row = 0; row < rows; row += 1) {
         for (var col = 0; col < cols; col += 1) {
@@ -109,8 +109,8 @@ function calculateValuesBehindTiles(board, mineSymbol) {
 }
 
 function isValidPosition(board, row, col, mineSymbol) {
-    var rows = board[0].length,
-        cols = board[1].length,
+    var rows = board.length,
+        cols = board[0].length,
         isInsideBoard = row >= 0 && col >= 0 && row < rows && col < cols,
         hasMine;
 
@@ -136,8 +136,8 @@ function createTile(startX, startY, row, col, value, isVisited, hasMineFlag) {
 function generateTiles(board) {
     var tiles = [],
         newTile,
-        rows = board[0].length,
-        cols = board[1].length;
+        rows = board.length,
+        cols = board[0].length;
 
     for (var row = 0; row < rows; row += 1) {
         for (var col = 0; col < cols; col += 1) {
@@ -167,11 +167,12 @@ function preparePlayingBoard(level) {
     generateRandomlyPositionedMines(board, gameDifficulty.numberOfMines, mineSymbol);
     calculateValuesBehindTiles(board, mineSymbol);
     tiles = generateTiles(board);
-    //printBoardOnConsole(board);
+
+    printBoardOnConsole(board);
 }
 
 function printBoardOnConsole(board) {
-    var rows = board[0].length;
+    var rows = board.length;
     for (var row = 0; row < rows; row += 1) {
         console.log(board[row]);
     }
