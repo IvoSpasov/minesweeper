@@ -1,7 +1,7 @@
-function startNewGame() {
-    preparePlayingBoard();
+function startNewGame(level) {
+    preparePlayingBoard(level);
     drawInitialTiles();
     initializeGame();
 }
 
-startNewGame();
+startNewGame('intermediate');

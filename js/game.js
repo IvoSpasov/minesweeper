@@ -9,13 +9,11 @@ function addEventListeners() {
 }
 
 function startEasyGame() {
-    gameDifficulty = 'easy';
-    startNewGame();
+    startNewGame('easy');
 }
 
 function startIntermediateGame() {
-    gameDifficulty = 'intermediate';
-    startNewGame();
+    startNewGame('intermediate');
 }
 
 function removeEventListenersFromCanvas() {
