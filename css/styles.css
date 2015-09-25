@@ -1,0 +1,12 @@
+/*body {*/
+    /*background-image: url("background.jpg");*/
+/*}*/
+
+.alert {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.bold {
+    font-weight: bold;
+}

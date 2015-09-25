@@ -2,40 +2,64 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <!-- This tag lets IE know which engine it should use to render the page.
+    Best practice is to select the latest and greatest-->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- This tag is used to let know mobile browsers that the website is mobile compatible.-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://bootswatch.com/slate/bootstrap.min.css"/>
+    <link href="css/styles.css" rel="stylesheet" type="text/css">
     <title>Minesweeper</title>
-    <link href="styles/game.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-    <section>
-        <canvas id="mines-canvas" width="725" height="725">
-            Your browser does not support the canvas element.
-        </canvas>
-        <div id="game-info">
-            <div class="centered">
-                <h1>Minesweeper</h1>
-            </div>
-            <div>
-                <p>Level of difficulty:</p>
-            </div>
-            <div>
-                <input type="radio" name="difficulty" id="easy">
-                <label for="easy">Easy (9x9 with 10 mines)</label>
-            </div>
-            <div>
-                <input type="radio" name="difficulty" id="intermediate" checked="checked">
-                <label for="intermediate">Intermediate (16x16 with 40 mines)</label>
-            </div>
-            <div class="button">
-                <button id="restart-btn">New game</button>
-            </div>
-            <div id="game-status" class="centered"></div>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <h1 class="text-center">Minesweeper</h1>
         </div>
-    </section>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="btn-group btn-group-justified" id="difficulty">
+                <a href="#" id="easy" class="btn btn-default">10 Mines</a>
+                <a href="#" id="intermediate" class="btn btn-default">40 Mines</a>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="alert alert-danger alert-dismissible fade in hidden">
+                <!--<button type="button" class="close" data-dismiss="alert">&times;</button>-->
+                <span class="bold">You hit a mine. Game Over.</span>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="alert alert-success alert-dismissible fade in hidden">
+                <!--<button type="button" class="close" data-dismiss="alert">&times;</button>-->
+                <span class="bold">Congratulations. You win.</span>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <canvas id="mines-canvas" class="center-block">
+                Your browser does not support the canvas element.
+            </canvas>
+        </div>
+    </div>
+</div>
 
-    <script src="scripts/array-methods.js" type="text/javascript"></script>
-    <script src="scripts/playing-board.js" type="text/javascript"></script>
-    <script src="scripts/drawing.js" type="text/javascript"></script>
-    <script src="scripts/game.js" type="text/javascript"></script>
-    <script src="scripts/main.js" type="text/javascript"></script>
+<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js" type="text/javascript"></script>-->
+<script src="js/libs/jquery-2.1.4.min.js" type="text/javascript"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="js/array-methods.js" type="text/javascript"></script>
+<script src="js/settings.js" type="text/javascript"></script>
+<script src="js/playing-board.js" type="text/javascript"></script>
+<script src="js/drawing.js" type="text/javascript"></script>
+<script src="js/game.js" type="text/javascript"></script>
+<script src="js/main.js" type="text/javascript"></script>
 </body>
 </html>
