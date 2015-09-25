@@ -11,7 +11,7 @@ function generateGameDifficulty(level) {
         case 'easy':
             return createGameDifficultyObject(9, 9, 10);
         case 'intermediate':
-            return createGameDifficultyObject(10, 16, 20);
+            return createGameDifficultyObject(16, 16, 40);
         default :
             console.log('Not implemented game difficulty.');
             break;
@@ -21,7 +21,7 @@ function generateGameDifficulty(level) {
 function prepareGameSettings(level) {
     var TILE_SIZE_IN_PX = 40,
         TILES_OFFSET_FROM_CANVAS_IN_PX = 5,
-        GAP_BETWEEN_TILES_IN_PX = 2,
+        GAP_BETWEEN_TILES_IN_PX = 3,
         MINE_SYMBOL = '*',
         gameDifficulty;
 

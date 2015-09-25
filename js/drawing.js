@@ -1,4 +1,4 @@
-var canvas = document.getElementById('mines-canvas'),
+var canvas = $('#mines-canvas')[0],
     context = canvas.getContext('2d'),
     valueXOffset = 13,
     valueYOffset = 30,

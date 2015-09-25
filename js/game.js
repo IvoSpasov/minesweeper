@@ -47,14 +47,13 @@ function onTileRightClick(event) {
 }
 
 function getClickedTile(event, tiles, settings) {
-    var rect = canvas.getBoundingClientRect(),
-        x = event.clientX - rect.left,
-        y = event.clientY - rect.top,
-        tile;
+    var tile;
 
     tile = tiles.find(function (tile) {
-        return tile.startXinPx + settings.tileSizeInPx > x &&
-            tile.startYinPx + settings.tileSizeInPx > y;
+        return tile.startXinPx < event.offsetX &&
+            event.offsetX <= tile.startXinPx + settings.tileSizeInPx &&
+            tile.startYinPx < event.offsetY &&
+            event.offsetY <= tile.startYinPx + settings.tileSizeInPx;
     });
 
     return tile;
