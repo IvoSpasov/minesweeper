@@ -1,14 +1,11 @@
 var horizontalTiles,
     verticalTiles,
-    tileSize = 40,
-    tileStartPositionX,
-    tileStartPositionY,
-    tileStep,
+    tileSizeInPx = 40,
     numberOfMines,
     tiles = [],
     mineSymbol = '*';
 
-function createGameDifficulty(level,verticalTiles, horizontalTiles, numberOfMines) {
+function createGameDifficulty(level, verticalTiles, horizontalTiles, numberOfMines) {
     return {
         level: level,
         verticalTiles: verticalTiles,
@@ -121,10 +118,10 @@ function isValidPosition(board, row, col, mineSymbol) {
     return isInsideBoard && !hasMine;
 }
 
-function createTile(startX, startY, row, col, value, isVisited, hasMineFlag) {
+function createTile(startXinPx, startYinPx, row, col, value, isVisited, hasMineFlag) {
     return {
-        startX: startX,
-        startY: startY,
+        startXinPx: startXinPx,
+        startYinPx: startYinPx,
         row: row,
         col: col,
         value: value,
@@ -134,20 +131,27 @@ function createTile(startX, startY, row, col, value, isVisited, hasMineFlag) {
 }
 
 function generateTiles(board) {
-    var tiles = [],
-        newTile,
+    var TILES_OFFSET_FROM_CANVAS_IN_PX = 5,
+        GAP_BETWEEN_TILES_IN_PX = 2,
         rows = board.length,
-        cols = board[0].length;
+        cols = board[0].length,
+        tiles = [],
+        tileStartPositionXinPx = TILES_OFFSET_FROM_CANVAS_IN_PX,
+        tileStartPositionYinPx = TILES_OFFSET_FROM_CANVAS_IN_PX,
+        newTile,
+        tileStepInPx;
+
+    tileStepInPx = tileSizeInPx + GAP_BETWEEN_TILES_IN_PX;
 
     for (var row = 0; row < rows; row += 1) {
         for (var col = 0; col < cols; col += 1) {
-            newTile = createTile(tileStartPositionX, tileStartPositionY, row, col, board[row][col], false, false);
+            newTile = createTile(tileStartPositionXinPx, tileStartPositionYinPx, row, col, board[row][col], false, false);
             tiles.push(newTile);
-            tileStartPositionX += tileStep;
+            tileStartPositionXinPx += tileStepInPx;
         }
 
-        tileStartPositionX = 5;
-        tileStartPositionY += tileStep;
+        tileStartPositionXinPx = TILES_OFFSET_FROM_CANVAS_IN_PX;
+        tileStartPositionYinPx += tileStepInPx;
     }
 
     return tiles;
@@ -157,18 +161,19 @@ function preparePlayingBoard(level) {
     var gameDifficulty,
         board;
 
-    tileStartPositionX = 5;
-    tileStartPositionY = 5;
-    tileStep = tileSize + tileStartPositionX;
-
     gameDifficulty = generateGameDifficulty(level);
+
+    numberOfMines = gameDifficulty.numberOfMines;
+    verticalTiles = gameDifficulty.verticalTiles;
+    horizontalTiles = gameDifficulty.horizontalTiles;
+
     board = createEmptyMatrix(gameDifficulty.verticalTiles, gameDifficulty.horizontalTiles);
     fillMatrixWithZeros(board);
     generateRandomlyPositionedMines(board, gameDifficulty.numberOfMines, mineSymbol);
     calculateValuesBehindTiles(board, mineSymbol);
     tiles = generateTiles(board);
 
-    printBoardOnConsole(board);
+    //printBoardOnConsole(board);
 }
 
 function printBoardOnConsole(board) {

@@ -4,15 +4,15 @@ var canvas = document.getElementById('mines-canvas'),
     valueYOffset = 30,
     fontStyle = 'bold 28px Consolas';
 
-function drawOneTile(tile, isGrey) {
-    if (isGrey) {
+function drawOneTile(tile, isOpened) {
+    if (isOpened) {
         context.fillStyle = 'grey';
     }
     else {
         context.fillStyle = 'rgba(146, 186, 209, 1)'; //'rgb(107, 187, 201)';
     }
 
-    context.fillRect(tile.startX, tile.startY, tileSize, tileSize);
+    context.fillRect(tile.startXinPx, tile.startYinPx, tileSizeInPx, tileSizeInPx);
 }
 
 function drawInitialTiles() {
@@ -51,11 +51,11 @@ function drawTileWithValue(tile) {
     }
 
     context.font = fontStyle;
-    context.fillText(tile.value, tile.startX + valueXOffset, tile.startY + valueYOffset);
+    context.fillText(tile.value, tile.startXinPx + valueXOffset, tile.startYinPx + valueYOffset);
 }
 
 function drawMineFlag(tile) {
     context.fillStyle = 'red';
     context.font = fontStyle;
-    context.fillText('M', tile.startX + valueXOffset, tile.startY + valueYOffset);
+    context.fillText('M', tile.startXinPx + valueXOffset, tile.startYinPx + valueYOffset);
 }

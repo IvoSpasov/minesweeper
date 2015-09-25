@@ -59,8 +59,8 @@ function getClickedTile(event) {
         tile;
 
     tile = tiles.find(function (tile) {
-        return tile.startX + tileSize > x &&
-            tile.startY + tileSize > y;
+        return tile.startXinPx + tileSizeInPx > x &&
+            tile.startYinPx + tileSizeInPx > y;
     });
 
     return tile;
