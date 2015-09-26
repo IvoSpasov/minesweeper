@@ -20,31 +20,62 @@ function getGameDifficulty(level) {
     }
 }
 
-function prepareGameSettings(level) {
-    var TILE_SIZE_IN_PX = 40,
-        TILES_OFFSET_FROM_CANVAS_IN_PX = 5,
-        GAP_BETWEEN_TILES_IN_PX = 3,
-        MINE_SYMBOL = '*',
-        gameDifficulty,
-        canvasWidth,
-        canvasHeight;
+function getDefaultTileProperties() {
+    return {
+        tileSizeInPx: 40,
+        tilesOffsetFromCanvasInPx: 5,
+        gapBetweenTilesInPx: 3
+    }
+}
 
-    gameDifficulty = getGameDifficulty(level);
-    canvasWidth = (2 * TILES_OFFSET_FROM_CANVAS_IN_PX) +
-        (TILE_SIZE_IN_PX * gameDifficulty.horizontalTiles) +
-        (GAP_BETWEEN_TILES_IN_PX * (gameDifficulty.horizontalTiles - 1));
-    canvasHeight = (2 * TILES_OFFSET_FROM_CANVAS_IN_PX) +
-        (TILE_SIZE_IN_PX * gameDifficulty.verticalTiles) +
-        (GAP_BETWEEN_TILES_IN_PX * (gameDifficulty.verticalTiles - 1));
+function calculateCanvasSize(difficulty, tileProperties) {
+    var canvasWidthInPx,
+        canvasHeightInPx;
 
+
+    canvasWidthInPx = (2 * tileProperties.tilesOffsetFromCanvasInPx) +
+        (tileProperties.tileSizeInPx * difficulty.horizontalTiles) +
+        (tileProperties.gapBetweenTilesInPx * (difficulty.horizontalTiles - 1));
+
+    canvasHeightInPx = (2 * tileProperties.tilesOffsetFromCanvasInPx) +
+        (tileProperties.tileSizeInPx * difficulty.verticalTiles) +
+        (tileProperties.gapBetweenTilesInPx * (difficulty.verticalTiles - 1));
 
     return {
-        tileSizeInPx: TILE_SIZE_IN_PX,
-        tilesOffsetFromCanvasInPx: TILES_OFFSET_FROM_CANVAS_IN_PX,
-        gapBetweenTilesInPx: GAP_BETWEEN_TILES_IN_PX,
+        canvasWidthInPx: canvasWidthInPx,
+        canvasHeightInPx: canvasHeightInPx
+    }
+}
+
+function prepareGameSettings(level) {
+    var MINE_SYMBOL = '*',
+        gameDifficulty,
+        tileProperties,
+        canvasSize;
+
+    gameDifficulty = getGameDifficulty(level);
+    tileProperties = getDefaultTileProperties();
+    canvasSize = calculateCanvasSize(gameDifficulty, tileProperties);
+
+
+
+
+    //var containerWidthInPx = $('.container').width(),
+    //    calculatedTileSize = TILE_SIZE_IN_PX;
+    //
+    //if (canvasWidthInPx > containerWidthInPx) {
+    //    calculatedTileSize = containerWidthInPx / gameDifficulty.horizontalTiles;
+    //    // get the integer only
+    //}
+
+    return {
+        tileSizeInPx: tileProperties.tileSizeInPx,
+        tilesOffsetFromCanvasInPx: tileProperties.tilesOffsetFromCanvasInPx,
+        gapBetweenTilesInPx: tileProperties.gapBetweenTilesInPx,
         mineSymbol: MINE_SYMBOL,
         difficulty: gameDifficulty,
-        canvasWidth: canvasWidth,
-        canvasHeight: canvasHeight
-    }
+        canvasSize: canvasSize
+    };
+
+    // change to tileProperties
 }

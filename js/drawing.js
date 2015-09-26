@@ -4,8 +4,11 @@ var canvas,
     valueYOffset = 30,
     fontStyle = 'bold 28px Consolas';
 
-function prepareCanvas(width, height) {
-    canvas = $('#mines-canvas').attr('width', width).attr('height', height)[0];
+function prepareCanvas(canvasSize) {
+    canvas = $('#mines-canvas')
+        .attr('width', canvasSize.canvasWidthInPx)
+        .attr('height', canvasSize.canvasHeightInPx)[0];
+
     context = canvas.getContext('2d');
 }
 
