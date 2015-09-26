@@ -47,26 +47,50 @@ function calculateCanvasSize(difficulty, tileProperties) {
     }
 }
 
+function getContainerSize() {
+    var $container = $('.container'),
+        containerWidthInPx = $container.width(),
+        containerHeightInPx = $container.height();
+
+    return {
+        containerWidthInPx: containerWidthInPx,
+        containerHeightInPx: containerHeightInPx
+    }
+}
+
+
+function calculateTileSize(difficulty, tileProperties, containerSize) {
+    var tileSizeInPx,
+        tileSizeAsIntegerInPx;
+
+    tileSizeInPx = (containerSize.containerWidthInPx - (2 * tileProperties.tilesOffsetFromCanvasInPx) -
+        (tileProperties.gapBetweenTilesInPx * (difficulty.horizontalTiles - 1)))
+        / difficulty.horizontalTiles;
+
+    // If it is not an integer the tiles become blurry.
+    tileSizeAsIntegerInPx = Math.floor(tileSizeInPx);
+    return tileSizeAsIntegerInPx;
+}
+
 function prepareGameSettings(level) {
     var MINE_SYMBOL = '*',
         gameDifficulty,
         tileProperties,
-        canvasSize;
+        canvasSize,
+        containerSize;
 
     gameDifficulty = getGameDifficulty(level);
     tileProperties = getDefaultTileProperties();
     canvasSize = calculateCanvasSize(gameDifficulty, tileProperties);
+    containerSize = getContainerSize();
 
-
-
-
-    //var containerWidthInPx = $('.container').width(),
-    //    calculatedTileSize = TILE_SIZE_IN_PX;
-    //
-    //if (canvasWidthInPx > containerWidthInPx) {
-    //    calculatedTileSize = containerWidthInPx / gameDifficulty.horizontalTiles;
-    //    // get the integer only
-    //}
+    // If the game files gets outside the container -> resize it to fit.
+    if (canvasSize.canvasWidthInPx > containerSize.containerWidthInPx) {
+        // Recalculate new tile size and store it.
+        tileProperties.tileSizeInPx = calculateTileSize(gameDifficulty, tileProperties, containerSize);
+        // Recalculate the canvas size and store it.
+        canvasSize = calculateCanvasSize(gameDifficulty, tileProperties);
+    }
 
     return {
         tileSizeInPx: tileProperties.tileSizeInPx,
