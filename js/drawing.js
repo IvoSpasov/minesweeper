@@ -2,7 +2,7 @@ var canvas,
     context,
     valueXOffset = 13,
     valueYOffset = 30,
-    fontStyle = 'bold 28px Consolas';
+    fontStyle;
 
 function prepareCanvas(canvasSize) {
     canvas = $('#mines-canvas')

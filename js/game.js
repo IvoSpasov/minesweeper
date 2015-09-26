@@ -2,13 +2,13 @@ var tilesWithoutMines,
     tilesWithoutMinesCounter;
 
 function addEventListenersOnCanvas(tiles, settings) {
-    $('canvas').on('click', {tiles: tiles, settings: settings}, onTileLeftClick);
-    $('canvas').on('contextmenu', {tiles: tiles, settings: settings}, onTileRightClick);
+    $('canvas').on('click', {tiles: tiles, settings: settings}, onTileLeftClick).
+        on('contextmenu', {tiles: tiles, settings: settings}, onTileRightClick);
 }
 
 function removeEventListenersFromCanvas() {
-    $('canvas').off('click', onTileLeftClick);
-    $('canvas').off('contextmenu', onTileRightClick);
+    $('canvas').off('click', onTileLeftClick).
+        off('contextmenu', onTileRightClick);
 }
 
 function onTileLeftClick(event) {
@@ -16,8 +16,8 @@ function onTileLeftClick(event) {
         settings = event.data.settings,
         tile;
 
-    // To enable only left mouse button click. Scroll is disabled
-    if (event.button === 0) {
+    // To disable scroll click
+    if (event.button !== 1) {
         tile = getClickedTile(event, tiles, settings);
         if (tile && !tile.isVisited && !tile.hasMineFlag) {
             showBehindTile(tile, tiles, settings);
