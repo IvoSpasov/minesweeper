@@ -23,7 +23,7 @@ function getGameDifficulty(level) {
 function getDefaultTileProperties() {
     return {
         tileSizeInPx: 40,
-        tilesOffsetFromCanvasInPx: 5,
+        tilesOffsetFromCanvasInPx: 0,
         gapBetweenTilesInPx: 3
     }
 }
@@ -49,7 +49,7 @@ function calculateCanvasSize(difficulty, tileProperties) {
 function calculateTileSize(difficulty, tileProperties, dimension, isWidth) {
     var tileSizeInPx,
         tileSizeAsIntegerInPx,
-        additionalHeightInPx = 2; // to hide scrollbar
+        additionalHeightInPx = 15; // to hide scrollbar
 
     if (isWidth) {
         tileSizeInPx = (dimension - (2 * tileProperties.tilesOffsetFromCanvasInPx) -
