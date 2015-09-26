@@ -47,14 +47,27 @@ function onTileRightClick(event) {
 }
 
 function getClickedTile(event, tiles, settings) {
-    var tile;
+    var rect = canvas.getBoundingClientRect(),
+        offsetX = event.clientX - rect.left,
+        offsetY = event.clientY - rect.top,
+        tile;
 
-    tile = tiles.find(function (tile) {
-        return tile.startXinPx < event.offsetX &&
-            event.offsetX <= tile.startXinPx + settings.tileSizeInPx &&
-            tile.startYinPx < event.offsetY &&
-            event.offsetY <= tile.startYinPx + settings.tileSizeInPx;
-    });
+    // If the event is from mouse click is has offsetX.
+    // If the event is from mobile phone it doesn't.
+    if(event.offsetX) {
+        tile = tiles.find(function (tile) {
+            return tile.startXinPx < event.offsetX &&
+                event.offsetX <= tile.startXinPx + settings.tileSizeInPx &&
+                tile.startYinPx < event.offsetY &&
+                event.offsetY <= tile.startYinPx + settings.tileSizeInPx;
+        });
+    }
+    else {
+        tile = tiles.find(function (tile) {
+            return tile.startXinPx + settings.tileSizeInPx > offsetX &&
+                tile.startYinPx + settings.tileSizeInPx > offsetY;
+        });
+    }
 
     return tile;
 }
