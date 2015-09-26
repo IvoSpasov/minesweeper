@@ -17,12 +17,12 @@ function onTileLeftClick(event) {
         tile;
 
     // To disable scroll click
-    if (event.button !== 1) {
+    //if (event.button !== 1) {
         tile = getClickedTile(event, tiles, settings);
         if (tile && !tile.isVisited && !tile.hasMineFlag) {
             showBehindTile(tile, tiles, settings);
         }
-    }
+    //}
 }
 
 function onTileRightClick(event) {
