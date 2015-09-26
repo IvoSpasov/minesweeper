@@ -53,7 +53,7 @@ function getClickedTile(event, tiles, settings) {
         tile;
 
     // If the event is from mouse click is has offsetX.
-    // If the event is from mobile phone it doesn't.
+    // Else the event is from mobile phone and it doesn't.
     if(event.offsetX) {
         tile = tiles.find(function (tile) {
             return tile.startXinPx < event.offsetX &&
@@ -64,8 +64,10 @@ function getClickedTile(event, tiles, settings) {
     }
     else {
         tile = tiles.find(function (tile) {
-            return tile.startXinPx + settings.tileSizeInPx > offsetX &&
-                tile.startYinPx + settings.tileSizeInPx > offsetY;
+            return tile.startXinPx < offsetX &&
+                offsetX <= tile.startXinPx + settings.tileSizeInPx &&
+                tile.startYinPx < offsetY &&
+                offsetY <= tile.startYinPx + settings.tileSizeInPx;
         });
     }
 
