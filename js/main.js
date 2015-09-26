@@ -4,8 +4,11 @@ function startNewGame(level) {
 
     gameSettings = prepareGameSettings(level);
     tiles = preparePlayingBoard(gameSettings);
+
     prepareCanvas(gameSettings.canvasSize);
     drawInitialTiles(tiles, gameSettings.tileSizeInPx);
+    calculateValueOffsets(gameSettings.tileSizeInPx);
+
     initializeGame(tiles, gameSettings);
 }
 

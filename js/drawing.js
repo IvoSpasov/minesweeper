@@ -42,11 +42,20 @@ function drawInitialTiles(tiles, tileSizeInPx) {
     }
 }
 
+function calculateValueOffsets(tileSizeInPx) {
+    var fontSize;
+    valueXOffset = tileSizeInPx / 3.3;
+    valueYOffset = tileSizeInPx / 1.4;
+    fontSize = tileSizeInPx / 1.4;
+
+    fontStyle = 'bold ' + fontSize + 'px Consolas';
+}
+
 function drawTileWithValue(tile, settings) {
     drawSingleTile(tile, settings.tileSizeInPx, true);
     switch (tile.value) {
         case settings.mineSymbol:
-            context.fillStyle = 'red';
+            context.fillStyle = 'rgb(236, 72, 68)'; // red
             break;
         case 1:
             context.fillStyle = 'blue';
@@ -73,7 +82,7 @@ function drawTileWithValue(tile, settings) {
 }
 
 function drawMineFlag(tile) {
-    context.fillStyle = 'red';
+    context.fillStyle = 'rgb(236, 72, 68)'; // red
     context.font = fontStyle;
     context.fillText('M', tile.startXinPx + valueXOffset, tile.startYinPx + valueYOffset);
 }
