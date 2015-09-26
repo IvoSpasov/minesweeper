@@ -32,7 +32,6 @@ function calculateCanvasSize(difficulty, tileProperties) {
     var canvasWidthInPx,
         canvasHeightInPx;
 
-
     canvasWidthInPx = (2 * tileProperties.tilesOffsetFromCanvasInPx) +
         (tileProperties.tileSizeInPx * difficulty.horizontalTiles) +
         (tileProperties.gapBetweenTilesInPx * (difficulty.horizontalTiles - 1));
@@ -47,48 +46,60 @@ function calculateCanvasSize(difficulty, tileProperties) {
     }
 }
 
-function getContainerSize() {
-    var $container = $('.container'),
-        containerWidthInPx = $container.width(),
-        containerHeightInPx = $container.height();
-
-    return {
-        containerWidthInPx: containerWidthInPx,
-        containerHeightInPx: containerHeightInPx
-    }
-}
-
-
-function calculateTileSize(difficulty, tileProperties, containerSize) {
+function calculateTileSize(difficulty, tileProperties, dimension, isWidth) {
     var tileSizeInPx,
         tileSizeAsIntegerInPx;
 
-    tileSizeInPx = (containerSize.containerWidthInPx - (2 * tileProperties.tilesOffsetFromCanvasInPx) -
-        (tileProperties.gapBetweenTilesInPx * (difficulty.horizontalTiles - 1)))
-        / difficulty.horizontalTiles;
+    if (isWidth) {
+        tileSizeInPx = (dimension - (2 * tileProperties.tilesOffsetFromCanvasInPx) -
+            (tileProperties.gapBetweenTilesInPx * (difficulty.horizontalTiles - 1)))
+            / difficulty.horizontalTiles;
+    }
+    else {
+        tileSizeInPx = (dimension - (2 * tileProperties.tilesOffsetFromCanvasInPx) -
+            (tileProperties.gapBetweenTilesInPx * (difficulty.verticalTiles - 1)))
+            / difficulty.verticalTiles;
+    }
 
     // If it is not an integer the tiles become blurry.
     tileSizeAsIntegerInPx = Math.floor(tileSizeInPx);
     return tileSizeAsIntegerInPx;
 }
 
+//function calculateTileSizeByHeight(difficulty, tileProperties, hight) {
+//    var tileSizeInPx,
+//        tileSizeAsIntegerInPx;
+//
+//
+//
+//    tileSizeAsIntegerInPx = Math.floor(tileSizeInPx);
+//    return tileSizeAsIntegerInPx;
+//}
+
 function prepareGameSettings(level) {
     var MINE_SYMBOL = '*',
         gameDifficulty,
         tileProperties,
         canvasSize,
-        containerSize;
+        containerWidthInPx = $('.container').width(),
+        headingButtonsHeightInPx = $('.heading').height() + $('.buttons').height() + 2, // plus 2 pixels to hide the scrollbar
+        windowHeightInPx = $(window).height();
 
     gameDifficulty = getGameDifficulty(level);
     tileProperties = getDefaultTileProperties();
     canvasSize = calculateCanvasSize(gameDifficulty, tileProperties);
-    containerSize = getContainerSize();
 
-    // If the game files gets outside the container -> resize it to fit.
-    if (canvasSize.canvasWidthInPx > containerSize.containerWidthInPx) {
-        // Recalculate new tile size and store it.
-        tileProperties.tileSizeInPx = calculateTileSize(gameDifficulty, tileProperties, containerSize);
+    // If the tiles get outside of the width of container, resize them to fit.
+    if (canvasSize.canvasWidthInPx > containerWidthInPx) {
+        // Recalculate tile size and store it.
+        tileProperties.tileSizeInPx = calculateTileSize(gameDifficulty, tileProperties, containerWidthInPx, true);
         // Recalculate the canvas size and store it.
+        canvasSize = calculateCanvasSize(gameDifficulty, tileProperties);
+    }
+
+    // If the tiles get outside of the height of window, resize them to fit.
+    if (canvasSize.canvasHeightInPx + headingButtonsHeightInPx > windowHeightInPx) {
+        tileProperties.tileSizeInPx = calculateTileSize(gameDifficulty, tileProperties, windowHeightInPx - headingButtonsHeightInPx, false);
         canvasSize = calculateCanvasSize(gameDifficulty, tileProperties);
     }
 
