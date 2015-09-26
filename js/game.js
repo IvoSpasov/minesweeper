@@ -2,12 +2,12 @@ var tilesWithoutMines,
     tilesWithoutMinesCounter;
 
 function addEventListenersOnCanvas(tiles, settings) {
-    $('canvas').on('click', {tiles: tiles, settings: settings}, onTileLeftClick).
+    $('canvas').on('tap', {tiles: tiles, settings: settings}, onTileLeftClick).
         on('contextmenu', {tiles: tiles, settings: settings}, onTileRightClick);
 }
 
 function removeEventListenersFromCanvas() {
-    $('canvas').off('click', onTileLeftClick).
+    $('canvas').off('tap', onTileLeftClick).
         off('contextmenu', onTileRightClick);
 }
 
