@@ -48,7 +48,8 @@ function calculateCanvasSize(difficulty, tileProperties) {
 
 function calculateTileSize(difficulty, tileProperties, dimension, isWidth) {
     var tileSizeInPx,
-        tileSizeAsIntegerInPx;
+        tileSizeAsIntegerInPx,
+        additionalHeightInPx = 2; // to hide scrollbar
 
     if (isWidth) {
         tileSizeInPx = (dimension - (2 * tileProperties.tilesOffsetFromCanvasInPx) -
@@ -57,7 +58,7 @@ function calculateTileSize(difficulty, tileProperties, dimension, isWidth) {
     }
     else {
         tileSizeInPx = (dimension - (2 * tileProperties.tilesOffsetFromCanvasInPx) -
-            (tileProperties.gapBetweenTilesInPx * (difficulty.verticalTiles - 1)))
+            (tileProperties.gapBetweenTilesInPx * (difficulty.verticalTiles - 1)) - additionalHeightInPx)
             / difficulty.verticalTiles;
     }
 
@@ -66,23 +67,13 @@ function calculateTileSize(difficulty, tileProperties, dimension, isWidth) {
     return tileSizeAsIntegerInPx;
 }
 
-//function calculateTileSizeByHeight(difficulty, tileProperties, hight) {
-//    var tileSizeInPx,
-//        tileSizeAsIntegerInPx;
-//
-//
-//
-//    tileSizeAsIntegerInPx = Math.floor(tileSizeInPx);
-//    return tileSizeAsIntegerInPx;
-//}
-
 function prepareGameSettings(level) {
     var MINE_SYMBOL = '*',
         gameDifficulty,
         tileProperties,
         canvasSize,
         containerWidthInPx = $('.container').width(),
-        headingButtonsHeightInPx = $('.heading').height() + $('.buttons').height() + 2, // plus 2 pixels to hide the scrollbar
+        headingButtonsHeightInPx = $('.heading').height() + $('.buttons').height(),
         windowHeightInPx = $(window).height();
 
     gameDifficulty = getGameDifficulty(level);

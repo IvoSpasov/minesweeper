@@ -13,13 +13,23 @@ function prepareCanvas(canvasSize) {
 }
 
 function drawSingleTile(tile, tileSizeInPx, isOpened) {
+    // gradient from top to bottom
+    var gradient = context.createLinearGradient(tile.startXinPx, tile.startYinPx, tile.startXinPx, tile.startYinPx + tileSizeInPx);
+
     if (isOpened) {
-        context.fillStyle = 'grey';
+        // grey
+        gradient.addColorStop(0, "rgb(138, 145, 150)");
+        gradient.addColorStop(0.6, "rgb(122, 130, 136)");
+        gradient.addColorStop(1, "rgb(112, 120, 125)");
     }
     else {
-        context.fillStyle = 'rgba(146, 186, 209, 1)';
+        // blue
+        gradient.addColorStop(0, "rgb(116, 202, 227)");
+        gradient.addColorStop(0.6, "rgb(91, 192, 222)");
+        gradient.addColorStop(1, "rgb(74, 185, 219)");
     }
 
+    context.fillStyle = gradient;
     context.fillRect(tile.startXinPx, tile.startYinPx, tileSizeInPx, tileSizeInPx);
 }
 
