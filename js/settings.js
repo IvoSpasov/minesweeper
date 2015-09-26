@@ -1,4 +1,4 @@
-function createGameDifficultyObject(verticalTiles, horizontalTiles, numberOfMines) {
+function createGameDifficulty(verticalTiles, horizontalTiles, numberOfMines) {
     return {
         verticalTiles: verticalTiles,
         horizontalTiles: horizontalTiles,
@@ -6,12 +6,14 @@ function createGameDifficultyObject(verticalTiles, horizontalTiles, numberOfMine
     }
 }
 
-function generateGameDifficulty(level) {
+function getGameDifficulty(level) {
     switch (level) {
         case 'easy':
-            return createGameDifficultyObject(9, 9, 10);
+            return createGameDifficulty(9, 9, 10);
         case 'intermediate':
-            return createGameDifficultyObject(16, 16, 40);
+            return createGameDifficulty(16, 16, 40);
+        case 'hard':
+            return createGameDifficulty(16, 30, 90);
         default :
             console.log('Not implemented game difficulty.');
             break;
@@ -27,7 +29,7 @@ function prepareGameSettings(level) {
         canvasWidth,
         canvasHeight;
 
-    gameDifficulty = generateGameDifficulty(level);
+    gameDifficulty = getGameDifficulty(level);
     canvasWidth = (2 * TILES_OFFSET_FROM_CANVAS_IN_PX) +
         (TILE_SIZE_IN_PX * gameDifficulty.horizontalTiles) +
         (GAP_BETWEEN_TILES_IN_PX * (gameDifficulty.horizontalTiles - 1));
