@@ -10,3 +10,7 @@
     position: fixed;
     top: 10px;
 }
+
+.heading .text-right {
+    margin-top: 39px;
+}
