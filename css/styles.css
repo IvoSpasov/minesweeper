@@ -1,12 +1,12 @@
-.alert {
-    margin-top: 15px;
-    margin-bottom: 15px;
-}
-
 .bold {
     font-weight: bold;
 }
 
 .buttons {
     margin-bottom: 15px;
+}
+
+.alert-danger, .alert-success{
+    position: fixed;
+    top: 10px;
 }
