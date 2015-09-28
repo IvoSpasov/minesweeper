@@ -76,12 +76,16 @@ function getDefaultTileValueProperties() {
 }
 
 function calculateValueProperties(tileSizeInPx) {
-    var fontSize;
+    var FONT_SIZE_FACTOR = 1.4,
+        X_OFFSET_FACTOR = 3.3,
+        Y_OFFSET_FACTOR = 1.4,
+        fontSize;
+
+    fontSize = tileSizeInPx / FONT_SIZE_FACTOR;
 
     return {
-        valueXOffset: tileSizeInPx / 3.3,
-        valueYOffset: tileSizeInPx / 1.4,
-        fontSize: tileSizeInPx / 1.4,
+        valueXOffset: tileSizeInPx / X_OFFSET_FACTOR,
+        valueYOffset: tileSizeInPx / Y_OFFSET_FACTOR,
         fontStyle: 'bold ' + fontSize + 'px Consolas'
     }
 }
