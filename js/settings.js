@@ -67,11 +67,31 @@ function calculateTileSize(difficulty, tileProperties, dimension, isWidth) {
     return tileSizeAsIntegerInPx;
 }
 
+function getDefaultTileValueProperties() {
+    return {
+        valueXOffset: 13,
+        valueYOffset: 30,
+        fontStyle: 'bold 28px Consolas'
+    }
+}
+
+function calculateValueProperties(tileSizeInPx) {
+    var fontSize;
+
+    return {
+        valueXOffset: tileSizeInPx / 3.3,
+        valueYOffset: tileSizeInPx / 1.4,
+        fontSize: tileSizeInPx / 1.4,
+        fontStyle: 'bold ' + fontSize + 'px Consolas'
+    }
+}
+
 function prepareGameSettings(level) {
     var MINE_SYMBOL = '*',
         gameDifficulty,
         tileProperties,
         canvasSize,
+        tileValueProperties,
         containerWidthInPx = $('.container').width(),
         headingButtonsHeightInPx = $('.heading').height() + $('.buttons').height(),
         windowHeightInPx = $(window).height();
@@ -79,6 +99,7 @@ function prepareGameSettings(level) {
     gameDifficulty = getGameDifficulty(level);
     tileProperties = getDefaultTileProperties();
     canvasSize = calculateCanvasSize(gameDifficulty, tileProperties);
+    tileValueProperties = getDefaultTileValueProperties();
 
     // If the tiles get outside of the width of container, resize them to fit.
     if (canvasSize.canvasWidthInPx > containerWidthInPx) {
@@ -86,18 +107,21 @@ function prepareGameSettings(level) {
         tileProperties.tileSizeInPx = calculateTileSize(gameDifficulty, tileProperties, containerWidthInPx, true);
         // Recalculate the canvas size and store it.
         canvasSize = calculateCanvasSize(gameDifficulty, tileProperties);
+        tileValueProperties = calculateValueProperties(tileProperties.tileSizeInPx);
     }
 
     // If the tiles get outside of the height of window, resize them to fit.
     if (canvasSize.canvasHeightInPx + headingButtonsHeightInPx > windowHeightInPx) {
         tileProperties.tileSizeInPx = calculateTileSize(gameDifficulty, tileProperties, windowHeightInPx - headingButtonsHeightInPx, false);
         canvasSize = calculateCanvasSize(gameDifficulty, tileProperties);
+        tileValueProperties = calculateValueProperties(tileProperties.tileSizeInPx);
     }
 
     return {
         tileSizeInPx: tileProperties.tileSizeInPx,
         tilesOffsetFromCanvasInPx: tileProperties.tilesOffsetFromCanvasInPx,
         gapBetweenTilesInPx: tileProperties.gapBetweenTilesInPx,
+        tileValueProperties : tileValueProperties,
         mineSymbol: MINE_SYMBOL,
         difficulty: gameDifficulty,
         canvasSize: canvasSize

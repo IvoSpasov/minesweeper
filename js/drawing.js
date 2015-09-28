@@ -1,8 +1,5 @@
 var canvas,
-    context,
-    valueXOffset = 13,
-    valueYOffset = 30,
-    fontStyle;
+    context;
 
 function prepareCanvas(canvasSize) {
     canvas = $('#mines-canvas')
@@ -42,15 +39,6 @@ function drawInitialTiles(tiles, tileSizeInPx) {
     }
 }
 
-function calculateValueOffsets(tileSizeInPx) {
-    var fontSize;
-    valueXOffset = tileSizeInPx / 3.3;
-    valueYOffset = tileSizeInPx / 1.4;
-    fontSize = tileSizeInPx / 1.4;
-
-    fontStyle = 'bold ' + fontSize + 'px Consolas';
-}
-
 function drawTileWithValue(tile, settings) {
     drawSingleTile(tile, settings.tileSizeInPx, true);
     switch (tile.value) {
@@ -77,12 +65,16 @@ function drawTileWithValue(tile, settings) {
             break;
     }
 
-    context.font = fontStyle;
-    context.fillText(tile.value, tile.startXinPx + valueXOffset, tile.startYinPx + valueYOffset);
+    context.font = settings.tileValueProperties.fontStyle;
+    context.fillText(tile.value,
+        tile.startXinPx + settings.tileValueProperties.valueXOffset,
+        tile.startYinPx + settings.tileValueProperties.valueYOffset);
 }
 
-function drawMineFlag(tile) {
+function drawMineFlag(tile, tileValueProperties) {
     context.fillStyle = 'rgb(236, 72, 68)'; // red
-    context.font = fontStyle;
-    context.fillText('M', tile.startXinPx + valueXOffset, tile.startYinPx + valueYOffset);
+    context.font = tileValueProperties.fontStyle;
+    context.fillText('M',
+        tile.startXinPx + tileValueProperties.valueXOffset,
+        tile.startYinPx + tileValueProperties.valueYOffset);
 }

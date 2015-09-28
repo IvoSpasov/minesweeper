@@ -37,7 +37,7 @@ function onTileRightClick(event) {
     if (tile && !tile.isVisited) {
         if (!tile.hasMineFlag) {
             tile.hasMineFlag = true;
-            drawMineFlag(tile);
+            drawMineFlag(tile, settings.tileValueProperties);
         }
         else {
             tile.hasMineFlag = false;
@@ -47,7 +47,7 @@ function onTileRightClick(event) {
 }
 
 function getClickedTile(event, tiles, settings) {
-    var rect = canvas.getBoundingClientRect(),
+    var rect = $('canvas')[0].getBoundingClientRect(),
         offsetX = event.clientX - rect.left,
         offsetY = event.clientY - rect.top,
         tile;

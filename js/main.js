@@ -7,7 +7,7 @@ function startNewGame(level) {
 
     prepareCanvas(gameSettings.canvasSize);
     drawInitialTiles(tiles, gameSettings.tileSizeInPx);
-    calculateValueOffsets(gameSettings.tileSizeInPx);
+    calculateValueProperties(gameSettings.tileSizeInPx);
 
     initializeGame(tiles, gameSettings);
 }
