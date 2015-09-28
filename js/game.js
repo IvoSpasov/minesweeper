@@ -2,12 +2,12 @@ var tilesWithoutMines,
     tilesWithoutMinesCounter;
 
 function addEventListenersOnCanvas(tiles, settings) {
-    $('canvas').on('tap', {tiles: tiles, settings: settings}, onTileLeftClick).
+    $('canvas').on('click', {tiles: tiles, settings: settings}, onTileLeftClick).
         on('contextmenu', {tiles: tiles, settings: settings}, onTileRightClick);
 }
 
 function removeEventListenersFromCanvas() {
-    $('canvas').off('tap', onTileLeftClick).
+    $('canvas').off('click', onTileLeftClick).
         off('contextmenu', onTileRightClick);
 }
 
@@ -52,8 +52,7 @@ function getClickedTile(event, tiles, settings) {
         offsetY = event.clientY - rect.top,
         tile;
 
-    // If the event is from mouse click is has offsetX.
-    // Else the event is from mobile phone and it doesn't.
+    // Same events may not have offsetX. In this case I use the clientX in the else.
     if(event.offsetX) {
         tile = tiles.find(function (tile) {
             return tile.startXinPx < event.offsetX &&
